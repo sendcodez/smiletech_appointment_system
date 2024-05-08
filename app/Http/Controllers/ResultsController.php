@@ -55,18 +55,7 @@ class ResultsController extends Controller
                 'description' => $validatedData['description'],
                
         
-            ]);
-
-            $updateResult = Appointment::where([
-                'user_id' => $validatedData['user_id'],
-                'date' => $validatedData['date'],
-                'time' => $validatedData['time'],
-            ])->update(['status' => 3]);
-
-            if (!$updateResult) {
-                // Update failed
-                throw new \Exception('Appointment status update failed.');
-            }            
+            ]);           
             $user = Auth::user();
             $action = 'added_result';
             $description = 'Added a result for patient: ' . $result->fullname;
