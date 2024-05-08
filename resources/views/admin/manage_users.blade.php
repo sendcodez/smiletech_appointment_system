@@ -65,7 +65,14 @@
                                                     <span class="">Patient</span>
                                                    
                                                 @endif</td>
-                                                <td>{{ $user->created_at->toDateString() }}</td>
+                                                <td>
+                                                    @if($user->created_at)
+                                                        {{ $user->created_at->toDateString() }}
+                                                    @else
+                                                    2024-05-08
+                                                    @endif
+                                                </td>
+                                                
                                                 <td style="text-align: center">
                                                     <div class="dropdown ml-auto text-right">
                                                         <div class="btn-link text-center" data-toggle="dropdown">

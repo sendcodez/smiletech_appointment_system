@@ -3360,3 +3360,5 @@ Account{name=..., path=..., type=PREDICT}
 2024-05-08 21:24:29.107 [pool-3-thread-1] INFO  com.rs.mv.mvvs.instance.userspace.UserspaceManager - [framework:30010402]config file(C:\Users\Admin/.rmv/config) watcher launch successful
 2024-05-08 21:24:29.176 [pool-3-thread-1] INFO  com.rs.mv.mvvs.client.catalog.from.scan.CurrentPathScanner - [client:400205]scan file in current open file directory(F:/system/client/smiletech_appointment_system/resources/views)
 2024-05-08 21:24:29.178 [pool-3-thread-1] INFO  com.rs.mv.mvvs.client.catalog.from.scan.CurrentPathScanner - [client:400205]scan file in current open file directory(F:/system/client/smiletech_appointment_system/resources/views)
+2024-05-08 21:27:12.824 [pool-3-thread-1] INFO  com.rs.mv.mvvs.client.catalog.from.scan.CurrentPathScanner - [client:400205]scan file in current open file directory(F:/system/client/smiletech_appointment_system)
+2024-05-08 21:35:46.691 [pool-3-thread-1] INFO  com.rs.mv.mvvs.client.catalog.from.scan.CurrentPathScanner - [client:400205]scan file in current open file directory(F:/system/client/smiletech_appointment_system/config)

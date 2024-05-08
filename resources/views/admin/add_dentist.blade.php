@@ -121,9 +121,15 @@
                                                 <td colspan="10" style="text-align: center">No data available</td>
                                             </tr>
                                         @endforelse
+                                        
                                     </tbody>
                                 </table>
-
+                          
+                                @if($dentists->isEmpty())
+                                <tr>
+                                    <td colspan="10" style="text-align: center">No data available</td>
+                                </tr>
+                            @else
 
                                 <div class="modal fade" id="editUserModal{{ $dentist->id }}" tabindex="-1"
                                     aria-labelledby="editUserModalLabel{{ $dentist->id }}" aria-hidden="true">
@@ -225,6 +231,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @endif
 
                             </div>
                         </div>

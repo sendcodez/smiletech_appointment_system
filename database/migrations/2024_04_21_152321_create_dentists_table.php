@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dentists', function (Blueprint $table) {
             $table->id();
-             
+            $table->unsignedBigInteger('user_id');
             $table->string('firstname');
             $table->string('middlename')->nullable();
             $table->string('lastname');

@@ -123,8 +123,8 @@
 function printTable() {
             
             var totalAppointments = "{{ count($appointments) }}";
-            var startDate = "{{ $startDate }}";
-            var endDate = "{{ $endDate }}";
+            var startDate = "{{ $startDate ?? '' }}";
+            var endDate = "{{ $endDate ?? '' }}";
             var content = document.getElementById('example3').outerHTML;
             var printWindow = window.open('', '_blank');
             printWindow.document.open();
