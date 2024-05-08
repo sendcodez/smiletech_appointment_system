@@ -105,7 +105,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Keep Your Teeth Healthy</h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">{{$website->tagline}}</h1>
-                            <a href="appointment.html" class="btn btn-secondary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
+                            <a href="{{ route ('login') }}" class="btn btn-secondary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
 
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Keep Your Teeth Healthy</h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">{{$website->tagline}}</h1>
-                            <a href="appointment.html" class="btn btn-secondary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
+                            <a href="{{ route ('login') }}" class="btn btn-secondary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
                            
                         </div>
                     </div>
