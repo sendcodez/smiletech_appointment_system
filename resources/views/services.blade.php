@@ -89,87 +89,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{{ route ('index') }}" class="nav-item nav-link active">Home</a>
+                <a href="{{ route ('index') }}" class="nav-item nav-link">Home</a>
                 <a href="{{ route ('about') }}" class="nav-item nav-link">About</a>
-                <a href="{{ route ('services') }}" class="nav-item nav-link">Service</a>
+                <a href="{{ route ('services') }}" class="nav-item nav-link active">Service</a>
                 <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentist</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>
     </nav>
     <!-- Navbar End -->
-
-
-
-    <!-- Carousel Start -->
-    <div class="container-fluid p-0">
-        <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="w-100" src="{{ asset('frontend/img/carousel-1.jpg') }}" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Keep Your Teeth Healthy</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">{{$website->tagline}}</h1>
-                            <a href="{{ route ('login') }}" class="btn btn-secondary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('frontend/img/carousel-2.jpg') }}" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Keep Your Teeth Healthy</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">{{$website->tagline}}</h1>
-                            <a href="{{ route ('login') }}" class="btn btn-secondary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-    <!-- Carousel End -->
-
-
-   
-
-    <!-- About Start -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-7">
-                    <div class="section-title mb-4">
-                        <h5 class="position-relative d-inline-block text-secondary text-uppercase">About Us</h5>
-                        <h1 class="display-5 mb-0">The World's Best Dental Clinic That You Can Trust</h1>
-                    </div>
-                    <p class="mb-4">{{$website->about}}</p>
-                    
-                    <a href="{{ route ('login') }}" class="btn btn-secondary py-3 px-5 mt-4 wow zoomIn" data-wow-delay="0.6s">Make Appointment</a>
-                </div>
-                <div class="col-lg-5" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="{{ asset('frontend/img/about.jpg') }}" style="object-fit: cover;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- About End -->
-
-
-   
 
 
     <!-- Service Start -->
@@ -208,44 +136,6 @@
     <!-- Service End -->
 
 
-   
-
-
-
-   <!-- Team Start -->
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="row g-5">
-            <div class="col-lg-4 wow slideInUp" data-wow-delay="0.1s">
-                <div class="section-title bg-light rounded h-100 p-5">
-                    <h5 class="position-relative d-inline-block text-secondary text-uppercase">Our Dentist</h5>
-                    <h1 class="display-6 mb-4">Meet Our Certified & Experienced Dentist</h1>
-                    <a href="{{ route ('login') }}" class="btn btn-secondary py-3 px-5">Appointment</a>
-                </div>
-            </div>
-            @foreach($dentists as $dentist)
-            <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
-                <div class="team-item">
-                    <div class="position-relative rounded-top" style="z-index: 1;">
-                        <img class="img-fluid rounded-top w-100" src="{{ asset('dentist_image/' . $dentist->image) }}" alt="{{ $dentist->firstname }}">
-                        <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
-                        <h4 class="mb-2">{{ $dentist->firstname }} {{ $dentist->lastname }}</h4>
-                        <p class="text-secondary mb-0">{{ $dentist->about }}</p>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</div>
-<!-- Team End -->
     
 
 

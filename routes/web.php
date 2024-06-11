@@ -32,6 +32,9 @@ use App\Models\User;
 
 */
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/about', [IndexController::class, 'about'])->name('about');
+Route::get('/services', [IndexController::class, 'services'])->name('services');
+Route::get('/dentist', [IndexController::class, 'dentist'])->name('dentist');
 
 Route::get('login', [IndexController::class, 'login'])->name('login');
 

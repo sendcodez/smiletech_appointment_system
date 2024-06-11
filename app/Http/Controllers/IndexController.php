@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Website;
+use App\Models\Dentist;
+use App\Models\Service;
 class IndexController extends Controller
 {
     /**
@@ -11,8 +13,31 @@ class IndexController extends Controller
      */
     public function index()
     {
+        $dentists = Dentist::where('status', 1)->get();
+        $services = Service::where('status', 1)->get(); // Fetch active services
         $website = Website::first();
-        return view('index', compact('website'));
+        return view('index', compact('website','services','dentists'));
+    }
+    public function about()
+    {
+        $dentists = Dentist::where('status', 1)->get();
+        $services = Service::where('status', 1)->get(); // Fetch active services
+        $website = Website::first();
+        return view('about', compact('website','services','dentists'));
+    }
+    public function services()
+    {
+        $dentists = Dentist::where('status', 1)->get();
+        $services = Service::where('status', 1)->get(); // Fetch active services
+        $website = Website::first();
+        return view('services', compact('website','services','dentists'));
+    }
+    public function dentist()
+    {
+        $dentists = Dentist::where('status', 1)->get();
+        $services = Service::where('status', 1)->get(); // Fetch active services
+        $website = Website::first();
+        return view('dentist', compact('website','services','dentists'));
     }
 
     /**

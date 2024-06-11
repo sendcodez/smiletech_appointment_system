@@ -89,8 +89,86 @@
                 </div>
             </div>
          </div>
+         
+         <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <h2>Recent Appointments</h2>    
+                    <table id="example3" class="display" style="min-width: 845px">
+                        <div class="col-md-2 col-sm-6">
+                            <div class="form-group">
+                                <label for="statusFilter">Filter by Services:</label>
+                                <select id="statusFilter" class="selectpicker form-control">
+                                    <option value="">All</option>
+                                    @foreach($services as $service)
+                                        <option value="{{ $service->name }}">{{ $service->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <thead>
+                          
+                            <tr>
+                                <th class="no-print">#</th>
+                                <th>Patient Name</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($appointments as $key => $appointment)
+                                <tr>
+                                    <td class="no-print">{{ $loop->iteration }}</td>
+                                    <td>{{ ucfirst($appointment->user->firstname) }}
+                                        {{ ucfirst($appointment->user->lastname) }}</td>
+                                    <td>{{ $appointment->service ? $appointment->service->name : "Not available" }}</td>
+                                    <td>{{ $appointment->date }}</td>
+                                    <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
+                                    <td>
+                                        @php
+                                            $statusWord = '';
+                                            $badgeClass = '';
+                                            switch ($appointment->status) {
+                                                case 1:
+                                                    $statusWord = 'Pending';
+                                                    $badgeClass = 'badge badge-warning';
+                                                    break;
+                                                case 2:
+                                                    $statusWord = 'Approved';
+                                                    $badgeClass = 'badge badge-success';
+                                                    break;
+                                                case 3:
+                                                    $statusWord = 'Completed';
+                                                    $badgeClass = 'badge badge-primary';
+                                                    break;
+                                                case 4:
+                                                    $statusWord = 'Cancelled';
+                                                    $badgeClass = 'badge badge-danger';
+                                                    break;
+                                                default:
+                                                    $statusWord = 'Unknown';
+                                                    $badgeClass = 'badge badge-secondary';
+                                                    break;
+                                            }
+                                        @endphp
+                                        <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
+                                    </td>
+                                </tr>
+                           @empty
+                                <tr>
+                                    <td colspan="6" style="text-align: center">No data available</td>
+                                </tr>
+                           @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 @endif
 
 @if (Auth::user()->usertype == '3' || Auth::user()->usertype == '2' )
@@ -138,6 +216,7 @@
     </div>
 </div>
 @endif
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>c
 <script>
     fetch("{{ route('chart.data') }}")
@@ -168,5 +247,12 @@
                 }
             });
         });
+        $('#statusFilter').change(function() {
+        var status = $(this).val();
+        $('#example3 tbody tr').show(); // Show all rows
+        if (status) {
+            $('#example3 tbody tr').not(':contains(' + status + ')').hide(); // Hide rows not matching selected status
+        }
+    }); 
 </script>
 @endsection

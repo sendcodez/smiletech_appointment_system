@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Service;
 class ReportsController extends Controller
 {
     /**
@@ -11,13 +12,15 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return view('admin.reports', ['appointments' => []]);
+        $services = Service::all();
+        return view('admin.reports', ['appointments' => [], 'services' => $services]);
     }
     public function filter(Request $request)
     {
 
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
+        $services = Service::all();
         
         // Query appointments within the selected date range
         $appointments = Appointment::whereBetween('date', [$startDate, $endDate])->get();
@@ -26,6 +29,7 @@ class ReportsController extends Controller
             'appointments' => $appointments,
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'services' => $services,
         ]);
         
     }
