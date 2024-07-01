@@ -55,17 +55,38 @@
                             <div class="table-responsive">
                                 <button type="button" class="btn btn-success float-right" onclick="printTable()">Print</button>
                                 <table id="example3" class="display" style="min-width: 845px">
-                                    <div class="col-md-2 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="statusFilter">Filter by Services:</label>
-                                            <select id="statusFilter" class="selectpicker form-control">
-                                                <option value="">All</option>
-                                                @foreach($services as $service)
-                                                    <option value="{{ $service->name }}">{{ $service->name }}</option>
-                                                @endforeach
-                                            </select>
+                                    <label for="">Filter by:</label>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <label for="servicesFilter">Services</label>
+                                                    <select id="servicesFilter" class="selectpicker form-control">
+                                                        <option value="">All</option>
+                                                        @foreach($services as $service)
+                                                            <option value="{{ $service->name }}">{{ $service->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <label for="statusFilter">Status</label>
+                                                    <select id="statusFilter" class="selectpicker form-control">
+                                                        <option value="">All</option>
+                                                        <option value="Pending">Pending</option> 
+                                                        <option value="Approved">Approved</option> 
+                                                        <option value="Completed">Completed</option> 
+                                                        <option value="Cancelled">Cancelled</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    
                                     <thead>
                                         <tr>
                                             <th class="no-print">#</th>
@@ -172,12 +193,36 @@ function printTable() {
     printWindow.document.write('</body></html>');
     printWindow.document.close();
 }  
-        $('#statusFilter').change(function() {
-        var status = $(this).val();
-        $('#example3 tbody tr').show(); // Show all rows
-        if (status) {
-            $('#example3 tbody tr').not(':contains(' + status + ')').hide(); // Hide rows not matching selected status
-        }
-    }); 
+
+function applyFilters() {
+        var selectedService = $('#servicesFilter').val();
+        var selectedStatus = $('#statusFilter').val();
+
+        $('#example3 tbody tr').each(function() {
+            var row = $(this);
+            var matchesService = selectedService ? row.text().toLowerCase().indexOf(selectedService.toLowerCase()) !== -1 : true;
+            var matchesStatus = selectedStatus ? row.text().toLowerCase().indexOf(selectedStatus.toLowerCase()) !== -1 : true;
+
+            if (matchesService && matchesStatus) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        });
+    }
+
+    $('#servicesFilter').change(function() {
+        applyFilters();
+    });
+
+    $('#statusFilter').change(function() {
+        applyFilters();
+    });
+
+    $(document).ready(function() {
+        applyFilters(); 
+    });
+
+    
 </script>
 @endsection

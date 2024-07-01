@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ActivityLog;
+use App\Mail\AppointmentCancelled;
+use Illuminate\Support\Facades\Mail;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -137,7 +139,8 @@ class AppointmentController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment->status = 4;
         $appointment->save();
-       
+
+        Mail::to($appointment->user->email)->send(new AppointmentCancelled($appointment));
         
         if (Auth::user()->usertype === 1 || Auth::user()->usertype === 2) {
             // Log the cancellation if the user is an admin

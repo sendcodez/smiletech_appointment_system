@@ -22,18 +22,13 @@ $lastMessageBody = strlen($lastMessageBody) > 30 ? mb_substr($lastMessageBody, 0
         </td>
         {{-- center side --}}
         <td>
-            @if (Auth::user()->usertype == '1')
+          
             <p data-id="{{ $user->id }}" data-type="user">
                 {{ strlen($user->firstname) > 12 ? trim(substr($user->firstname, 0, 12)).'..' : $user->firstname }}
                 {{ $user->lastname }}
             </p>
         <span>
-            @endif
-            @if (Auth::user()->usertype == '3')
-            <p data-id="{{ $user->id }}" data-type="user">
-                Customer Support
-            </p>
-        @endif
+    
             {{-- Last Message user indicator --}}
             {!!
                 $lastMessage->from_id == Auth::user()->id

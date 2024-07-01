@@ -7,6 +7,9 @@ use App\Models\Appointment;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ActivityLog;
+use App\Mail\AppointmentApproved;
+use Illuminate\Support\Facades\Mail;
+
 class ManageAppointmentController extends Controller
 {
     /**
@@ -27,7 +30,8 @@ class ManageAppointmentController extends Controller
         $appointment->status = 2;
         $appointment->save();
        
-        
+        Mail::to($appointment->user->email)->send(new AppointmentApproved($appointment));
+
         if (Auth::user()->usertype === 1 || Auth::user()->usertype === 2) {
             // Log the cancellation if the user is an admin
             $user = Auth::user();
