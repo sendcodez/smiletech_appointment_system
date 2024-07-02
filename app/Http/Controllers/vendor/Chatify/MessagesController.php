@@ -332,28 +332,40 @@ class MessagesController extends Controller
     {
         $getRecords = null;
         $input = trim(filter_var($request['input']));
-        $records = User::where('id', '!=', Auth::user()->id)
+    
+        // Get the authenticated user
+        $authUser = Auth::user();
+    
+        $records = User::where('id', '!=', $authUser->id)
             ->where(function ($query) use ($input) {
                 $query->where('firstname', 'LIKE', "%{$input}%")
                     ->orWhere('lastname', 'LIKE', "%{$input}%");
             })
+            // If the authenticated user is of usertype 3, exclude users with usertype 3
+            ->when($authUser->usertype == 3, function ($query) {
+                return $query->where('usertype', '!=', 3);
+            })
             ->paginate($request->per_page ?? $this->perPage);
+    
         foreach ($records->items() as $record) {
             $getRecords .= view('Chatify::layouts.listItem', [
                 'get' => 'search_item',
                 'user' => Chatify::getUserWithAvatar($record),
             ])->render();
         }
+    
         if ($records->total() < 1) {
             $getRecords = '<p class="message-hint center-el"><span>Nothing to show.</span></p>';
         }
-        // send the response
+    
+        // Send the response
         return Response::json([
             'records' => $getRecords,
             'total' => $records->total(),
-            'last_page' => $records->lastPage()
+            'last_page' => $records->lastPage(),
         ], 200);
     }
+    
 
     /**
      * Get shared photos

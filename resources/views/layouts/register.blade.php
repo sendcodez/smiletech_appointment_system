@@ -57,10 +57,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{{ route ('index') }}" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="{{ route ('index') }}" class="nav-item nav-link">Home</a>
+                <a href="{{ route ('about') }}" class="nav-item nav-link">About</a>
+                <a href="{{ route ('services') }}" class="nav-item nav-link">Services</a>
+                <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentists</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>
@@ -104,6 +104,9 @@
                                            
                                             @yield('confirm_password')
                                         </div>
+                                        <div class="form-group">
+                                            @yield('terms')
+                                        </div>
                                         <div class="text-center mt-4">
                                             @yield('button')
                                         </div>
@@ -111,6 +114,7 @@
                                     <div class="new-account mt-3">
                                         @yield('already')
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

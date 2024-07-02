@@ -91,8 +91,8 @@
             <div class="navbar-nav ms-auto py-0">
                 <a href="{{ route ('index') }}" class="nav-item nav-link">Home</a>
                 <a href="{{ route ('about') }}" class="nav-item nav-link">About</a>
-                <a href="{{ route ('services') }}" class="nav-item nav-link active">Service</a>
-                <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentist</a>
+                <a href="{{ route ('services') }}" class="nav-item nav-link active">Services</a>
+                <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentists</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>

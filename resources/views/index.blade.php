@@ -91,8 +91,8 @@
             <div class="navbar-nav ms-auto py-0">
                 <a href="{{ route ('index') }}" class="nav-item nav-link active">Home</a>
                 <a href="{{ route ('about') }}" class="nav-item nav-link">About</a>
-                <a href="{{ route ('services') }}" class="nav-item nav-link">Service</a>
-                <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentist</a>
+                <a href="{{ route ('services') }}" class="nav-item nav-link">Services</a>
+                <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentists</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>
@@ -228,12 +228,7 @@
                 <div class="team-item">
                     <div class="position-relative rounded-top" style="z-index: 1;">
                         <img class="img-fluid rounded-top w-100" src="{{ asset('dentist_image/' . $dentist->image) }}" alt="{{ $dentist->firstname }}">
-                        <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            <a class="btn btn-secondary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-                        </div>
+                        
                     </div>
                     <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
                         <h4 class="mb-2">{{ $dentist->firstname }} {{ $dentist->lastname }}</h4>
