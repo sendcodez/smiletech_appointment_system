@@ -80,7 +80,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
-        <a href="index.html" class="navbar-brand p-0">
+        <a href="{{ route ('index') }}" class="navbar-brand p-0">
             <h1 class="m-2" style="color:#ff7400" > <img class="me-2" style="width:20%;" src="{{ asset('frontend/img/smiletech_logo.png') }}" alt="Image">{{ strtoupper($website->business_name) }}
             </h1>
         </a>
