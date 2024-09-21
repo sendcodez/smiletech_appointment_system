@@ -37,6 +37,22 @@
         height: 300px; /* Set a fixed height to maintain aspect ratio */
         object-fit: cover; /* Ensure the image covers the entire container */
     }
+    .twentytwenty-container {
+        max-width: 100%;
+        /* Ensure it doesn't exceed the parent width */
+        max-height: 600px;
+        /* Set a max height to avoid stretching */
+        overflow: hidden;
+        /* Prevent overflow of the images */
+    }
+
+    .twentytwenty-container img {
+        width: 100%;
+        height: 100%;
+        /* Maintain the aspect ratio */
+        object-fit: cover;
+        /* Ensure the image fits nicely without stretching */
+    }
 </style>
 <body>
     <!-- Spinner Start -->
@@ -100,40 +116,76 @@
     <!-- Navbar End -->
 
 
-    <!-- Service Start -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="row g-5 mb-5">
-                <div class="col-lg-5 wow zoomIn" data-wow-delay="0.3s" style="min-height: 400px;">
-                    <div class="twentytwenty-container position-relative h-100 rounded overflow-hidden">
-                        <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/before.jpg') }}" style="object-fit: cover;">
-                        <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/after.jpg') }}" style="object-fit: cover;">
-                    </div>
+<!-- Service Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row g-5 mb-5">
+            <!-- Before and After Image -->
+            <div class="col-lg-5 wow zoomIn" data-wow-delay="0.3s" style="min-height: 400px;">
+                <div class="twentytwenty-container position-relative h-100 rounded overflow-hidden">
+                    <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/before.jpg') }}" style="object-fit: cover;">
+                    <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/after.jpg') }}" style="object-fit: cover;">
                 </div>
-                <div class="col-lg-7">
-                    <div class="section-title mb-5">
-                        <h5 class="position-relative d-inline-block text-secondary text-uppercase">Our Services</h5>
-                        <h1 class="display-5 mb-0">We Offer The Best Quality Dental Services</h1>
-                    </div>
-                    <div class="row g-5">
-                        @foreach($services as $service)
-                        <div class="col-md-6 service-item wow zoomIn" data-wow-delay="0.6s">
-                            <div class="rounded-top overflow-hidden">
-                                <img class="img-fluid service-image" src="{{ asset('service_image/' . $service->image) }}" alt="{{ $service->name }}">
-                            </div>
-                            <div class="position-relative bg-light rounded-bottom text-center p-4">
-                                <h2 class="m-0">{{ strtoupper($service->name) }}</h2>
-                                <p class="m-0">{{ $service->description }}</p>
-                                <h4 class="m-0">₱ {{ $service->price }}</h4>
-                            </div>
+            </div>
+            
+            <!-- Two Services Beside Before and After Image -->
+            <div class="col-lg-7">
+                <div class="section-title mb-5">
+                    <h5 class="position-relative d-inline-block text-secondary text-uppercase">Our Services</h5>
+                    <h1 class="display-5 mb-0">We Offer The Best Quality Dental Services</h1>
+                </div>
+                <div class="row g-5">
+                    @foreach($services->take(2) as $service)
+                    <div class="col-md-6 service-item wow zoomIn" data-wow-delay="0.6s">
+                        <div class="rounded-top overflow-hidden">
+                            <img class="img-fluid service-image" src="{{ asset('service_image/' . $service->image) }}" alt="{{ $service->name }}">
                         </div>
-                        @endforeach
+                        <div class="position-relative bg-light rounded-bottom text-center p-4">
+                            <h2 class="m-0">{{ strtoupper($service->name) }}</h2>
+                            <p class="m-0">{{ $service->description }}</p>
+                            <h4 class="m-0">₱ {{ $service->price }}</h4>
+                        </div>
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>
+
+        <!-- Three Services Below -->
+        <div class="row g-5">
+            @foreach($services->slice(2, 3) as $service) <!-- Display exactly 3 services -->
+            <div class="col-md-4 service-item wow zoomIn" data-wow-delay="0.6s">
+                <div class="rounded-top overflow-hidden">
+                    <img class="img-fluid service-image" src="{{ asset('service_image/' . $service->image) }}" alt="{{ $service->name }}">
+                </div>
+                <div class="position-relative bg-light rounded-bottom text-center p-4">
+                    <h2 class="m-0">{{ strtoupper($service->name) }}</h2>
+                    <p class="m-0">{{ $service->description }}</p>
+                    <h4 class="m-0">₱ {{ $service->price }}</h4>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <!-- Additional Rows of 3 Services (if there are more) -->
+        <div class="row g-5">
+            @foreach($services->slice(5) as $service) <!-- Display any remaining services after the first 5 -->
+            <div class="col-md-4 service-item wow zoomIn" data-wow-delay="0.6s">
+                <div class="rounded-top overflow-hidden">
+                    <img class="img-fluid service-image" src="{{ asset('service_image/' . $service->image) }}" alt="{{ $service->name }}">
+                </div>
+                <div class="position-relative bg-light rounded-bottom text-center p-4">
+                    <h2 class="m-0">{{ strtoupper($service->name) }}</h2>
+                    <p class="m-0">{{ $service->description }}</p>
+                    <h4 class="m-0">₱ {{ $service->price }}</h4>
+                </div>
+            </div>
+            @endforeach
+        </div>
     </div>
-    <!-- Service End -->
+</div>
+<!-- Service End -->
+
 
 
     
