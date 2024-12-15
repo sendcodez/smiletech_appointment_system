@@ -87,7 +87,7 @@
                                         @csrf
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Email</strong></label>
-                                            @yield('email')
+                                            @yield('login')
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Password</strong></label>

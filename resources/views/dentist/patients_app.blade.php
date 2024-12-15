@@ -22,24 +22,22 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Patient Name</th>
-                                            <th>Service</th>
-                                            <th>Date</th>
-                                            <th>Day</th>
-                                            <th>Time</th>
-                                            <th>Reference Number</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>DATE</th>
+                                            <th>PATIENT NAME</th>
+                                            <th>SERVICE</th>
+                                            <th>DAY</th>
+                                            <th>TIME</th>
+                                            <th>REFERENCE NUMBER</th>
+                                            <th>STATUS</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             @forelse($patient_app as $app)
-                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $app->date }}</td>
                                                 <td>{{ $app->user->firstname }} {{ $app->user->lastname }}</td>
                                                 <td>{{ $app->service ? $app->service->name : "Not available" }}</td>
-                                                <td>{{ $app->date }}</td>
                                                 <td>{{ $app->day }}</td>
                                                 <td>{{ ucfirst($app->time) }}</td>
                                                 <td>{{ $app->reference_number }}</td>

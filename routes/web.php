@@ -17,6 +17,7 @@ use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\CustomerSupportController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\FaqController;
 use App\Models\User;
 
 
@@ -112,6 +113,13 @@ Route::middleware('auth')->group(function () {
 
     //CUSTOMER SUPPORT ROUTE
     Route::get('admin/customer-support',[CustomerSupportController::class, 'index'])->name('support.index');
+
+    //FAQ ROUTE
+    Route::get('admin/faq',[FaqController::class, 'faq'])->name('faq.index');
+    Route::get('patient/faq',[FaqController::class, 'faq_patient'])->name('faq.patient');
+    Route::get('admin/faq-categories',[FaqController::class, 'faq_category'])->name('faq.categories');
+    Route::post('admin/add-faq-categories', [FaqController::class, 'faq_category_store'])->name('faq_categories.store');
+    Route::post('admin/add-faqs', [FaqController::class, 'faq_store'])->name('faq.store');
 
     //REPORTS ROUTE
     Route::get('admin/reports',[ReportsController::class, 'index'])->name('reports.index');

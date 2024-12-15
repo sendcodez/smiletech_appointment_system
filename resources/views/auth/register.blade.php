@@ -1,6 +1,6 @@
 @extends('layouts.register')
 <link href="{{ asset('frontend/img/smiletech_logo.png') }}" rel="icon">
-<form method="POST" action="{{ route('register') }}">
+<form method="POST" action="{{ route('register') }}"  enctype="multipart/form-data">
     @csrf
     <!-- Name -->
     @section('firstname')
@@ -22,6 +22,13 @@
     <x-text-input id="lastname" class="form-control" type="text" name="lastname" :value="old('lastname')" required autofocus
         autocomplete="lastname" />
     <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+    @endsection
+
+    @section('username')
+    <x-input-label for="username" :value="__('Username')" />
+    <x-text-input id="username" class="form-control" type="text" name="username" :value="old('username')" required autofocus
+        autocomplete="username" />
+    <x-input-error :messages="$errors->get('username')" class="mt-2" />
     @endsection
 
     <!-- Email Address -->
@@ -51,6 +58,13 @@
 
     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
     @endsection
+
+    @section('attachment')
+    <x-input-label for="attachment" :value="__('Attachment')" />
+    <x-text-input id="attachment" class="form-control" type="file" name="attachment" required autofocus
+        accept=".pdf,.doc,.docx,.jpg,.png,.jpeg" />
+    <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
+@endsection
 
     @section('already')
     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

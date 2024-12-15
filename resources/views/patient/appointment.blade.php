@@ -29,32 +29,32 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Service</th>
-                                            <th>Date</th>
-                                            <th>Day</th>
-                                            <th>Time</th>
-                                            <th>Reference Number</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                           <!--  <th>#</th> -->
+                                            <th>DATE</th>
+                                            <th>SERVICE</th>
+                                            <th>DAY</th>
+                                            <th>TIME</th>
+                                            <th>REFERENCE NUMBER</th>
+                                            <th>STATUS</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             @forelse($appointments as $app)
-                                                <td>{{ $loop->iteration }}</td>
+                                               <!-- <td>{{ $loop->iteration }}</td> -->
+                                               <td>{{ $app->date }}</td>
                                                 <td>{{ $app->service ? $app->service->name : "Not available" }}</td>
-                                                <td>{{ $app->date }}</td>
                                                 <td>{{ $app->day }}</td>
                                                 <td>{{ ucfirst($app->time) }}</td>
                                                 <td>{{ $app->reference_number }}</td>
                                                 <td>
                                                     @if ($app->status == 1)
-                                                        <span class="badge badge-success">Pending</span>
+                                                        <span class="badge badge-warning">Pending</span>
                                                     @elseif ($app->status == 2)
-                                                        <span class="badge badge-info">Approved</span>
+                                                        <span class="badge badge-primary">Approved</span>
                                                     @elseif ($app->status == 3)
-                                                        <span class="badge badge-primary">Completed</span>
+                                                        <span class="badge badge-success">Completed</span>
                                                     @elseif ($app->status == 4)
                                                         <span class="badge badge-danger">Cancelled</span>
                                                     @endif

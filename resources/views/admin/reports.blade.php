@@ -122,11 +122,11 @@
                                                                 break;
                                                             case 2:
                                                                 $statusWord = 'Approved';
-                                                                $badgeClass = 'badge badge-success';
+                                                                $badgeClass = 'badge badge-primary';
                                                                 break;
                                                             case 3:
                                                                 $statusWord = 'Completed';
-                                                                $badgeClass = 'badge badge-primary';
+                                                                $badgeClass = 'badge badge-success  ';
                                                                 break;
                                                             case 4:
                                                                 $statusWord = 'Cancelled';

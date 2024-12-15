@@ -59,6 +59,11 @@
         object-fit: cover;
         /* Ensure the image fits nicely without stretching */
     }
+    .zoomed-image {
+        max-width: 100%;  /* Ensures the image fits within the modal's width */
+        height: auto;     /* Maintains the aspect ratio of the image */
+        max-height: 500px; /* Enlarge the image to a max height of 500px (adjust as needed) */
+    }
 </style>
 
 <body>
@@ -316,15 +321,42 @@
 
     <div class="container-fluid text-light py-4" style="background: #051225;">
         <div class="container">
-            <div class="row g-0">
-                <div class="col-md-12 text-center text-md-start">
-                    <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="#">Smiletech</a>. All
-                        Rights Reserved.</p>
+            <div class="row g-0 align-items-center">
+                <!-- Image on the left -->
+                <div class="col-md-6">
+                    <div class="full-map-area mb-4">
+                        <img src="{{ asset('images/smilemap2.jpg') }}" alt="Location Map" class="img-fluid zoomable" style="width: 24rem; height: 14rem;" data-bs-toggle="modal" data-bs-target="#imageModal"> 
+                        <i class="flaticon-381-location-4"></i>
+                    </div>
                 </div>
-
+    
+                <!-- Text on the right -->
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">We're located here at</p>
+                    <p class="mb-0" style="font-weight: bold;font-size:2rem;" >Brgy. Lantic, Carmona City, Cavite</p>
+                    <p class="m-0"><i class="fa fa-phone-alt me-2"></i>{{ $website->contact_number }}</p>
+                  
+                </div>
             </div>
         </div>
     </div>
+    
+    <!-- Modal for zooming the image -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Smiletech</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('images/smilemap2.jpg') }}" alt="Location Map" class="img-fluid zoomed-image">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
     <!-- Footer End -->
 
 

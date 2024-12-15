@@ -109,7 +109,7 @@
                                     <img src="{{ asset('images/avatar.png') }}" width="20" alt="" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    
+
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <a href="route('logout')"
@@ -166,7 +166,7 @@
                                 <span class="nav-text">Patients</span>
                             </a>
                         </li>
-                       <!-- <li><a href="widget-basic.html" class="ai-icon" aria-expanded="false">
+                        <!-- <li><a href="widget-basic.html" class="ai-icon" aria-expanded="false">
                                 <i class="fa fa-files-o"></i>
                                 <span class="nav-text">Records</span>
                             </a>
@@ -191,9 +191,15 @@
                                 <span class="nav-text">Activity Log</span>
                             </a>
                         </li>
-                        <li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
+                        <!--<li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
                                 <i class="fa fa-comments-o"></i>
                                 <span class="nav-text">Customer Support</span>
+                            </a>
+                        </li>
+                    -->
+                        <li><a href="{{ route('faq.index') }}" class="ai-icon" aria-expanded="false">
+                                <i class="fa fa-question-circle-o"></i>
+                                <span class="nav-text">FAQ</span>
                             </a>
                         </li>
                         <li><a href="{{ route('user.index') }}" class="ai-icon" aria-expanded="false">
@@ -218,12 +224,17 @@
                                 <span class="nav-text">Records</span>
                             </a>
                         </li>
-                        <li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
-                            <i class="fa fa-comments-o"></i>
-                            <span class="nav-text">Customer Support</span>
-                        </a>
-                    </li>
+                       <!-- <li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
+                                <i class="fa fa-comments-o"></i>
+                                <span class="nav-text">Customer Support</span>
+                            </a>
                         </li>
+                    -->
+                    <li><a href="{{ route('faq.patient') }}" class="ai-icon" aria-expanded="false">
+                        <i class="fa fa-question-circle-o"></i>
+                        <span class="nav-text">FAQ</span>
+                    </a>
+                </li>
                     @endif
 
                     @if (Auth::user()->usertype == '2')
@@ -269,7 +280,7 @@
     <script src="{{ asset('js/deznav-init.js') }}"></script>
     <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins-init/datatables.init.js') }}"></script>
-   
+
     <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
 
 
@@ -280,13 +291,9 @@
     <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
 
     <script>
-        
-      
         document.getElementById("printButton").addEventListener("click", function() {
             window.print();
         });
-
-        
     </script>
 
 </body>

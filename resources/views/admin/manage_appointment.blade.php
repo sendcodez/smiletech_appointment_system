@@ -47,9 +47,9 @@
                                                     @if ($app->status == 1)
                                                         <span class="badge badge-warning">Pending</span>
                                                     @elseif ($app->status == 2)
-                                                        <span class="badge badge-success">Approved</span>
+                                                        <span class="badge badge-primary">Approved</span>
                                                     @elseif ($app->status == 3)
-                                                        <span class="badge badge-primary">Completed</span>
+                                                        <span class="badge badge-success">Completed</span>
                                                     @elseif ($app->status == 4)
                                                         <span class="badge badge-danger">Cancelled</span>
                                                     @endif

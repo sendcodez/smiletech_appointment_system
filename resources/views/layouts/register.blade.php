@@ -75,42 +75,49 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Sign up your account</h4>
-                                    <form method="POST" action="{{ route('register') }}">
+                                    <form method="POST" action="{{ route('register') }}"  enctype="multipart/form-data">
                                         @csrf
-                                
-                                        <div class="form-group">
-                                           
-                                            @yield('firstname')
+                                    
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    @yield('firstname')
+                                                </div>
+                                                <div class="form-group">
+                                                    @yield('lastname')
+                                                </div>
+                                                <div class="form-group">
+                                                    @yield('password')
+                                                </div>
+                                                <div class="form-group">
+                                                    @yield('email')
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    @yield('middlename')
+                                                </div>
+                                                <div class="form-group">
+                                                    @yield('username')
+                                                </div>
+                                                <div class="form-group">
+                                                    @yield('confirm_password')
+                                                </div>
+                                                <div class="form-group">
+                                                    @yield('attachment')
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                           
-                                            @yield('middlename')
-                                        </div>
-
-                                        <div class="form-group">
-                                            
-                                            @yield('lastname')
-                                        </div>
-                                        <div class="form-group">
-                                           
-                                            @yield('email')
-                                        </div>
-
-                                        <div class="form-group">
-                                            
-                                            @yield('password')
-                                        </div>
-                                        <div class="form-group">
-                                           
-                                            @yield('confirm_password')
-                                        </div>
+                                    
                                         <div class="form-group">
                                             @yield('terms')
                                         </div>
+                                    
                                         <div class="text-center mt-4">
                                             @yield('button')
                                         </div>
                                     </form>
+                                    
                                     <div class="new-account mt-3">
                                         @yield('already')
                                     </div>
