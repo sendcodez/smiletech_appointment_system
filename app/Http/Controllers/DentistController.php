@@ -40,12 +40,14 @@ class DentistController extends Controller
                 'firstname' => 'required|string|max:255',
                 'middlename' => 'nullable|string|max:255',
                 'lastname' => 'required|string|max:255',
+                'username' => 'required|string|max:255|unique:users',
                 'contact_number' => 'required|string|max:255',
                 'address' => 'required|string|max:255', 
                 'about' => 'required|string|max:255',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|string|min:8',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748'
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748',
+                
             ]);
             $image = $request->file('image');
 
@@ -60,9 +62,11 @@ class DentistController extends Controller
                 'firstname' => $validatedData['firstname'],
                 'middlename' => $validatedData['middlename'],
                 'lastname' => $validatedData['lastname'],
+                'username' => $validatedData['username'],
                 'email' => $validatedData['email'],
                 'usertype' => 2,
                 'password' => bcrypt($validatedData['password']),
+                'attachment' => 'doctor'
             ]);
 
             $dentist = Dentist::create([
@@ -126,6 +130,7 @@ class DentistController extends Controller
                 'firstname' => 'required|string|max:255',
                 'middlename' => 'nullable|string|max:255',
                 'lastname' => 'required|string|max:255',
+                'username' => 'required|string|max:255',
                 'contact_number' => 'required|string|max:255',
                 'address' => 'required|string|max:255', 
                 'about' => 'required|string|max:255',
@@ -138,11 +143,13 @@ class DentistController extends Controller
             $dentist->firstname = $request->input('firstname');
             $dentist->middlename = $request->input('middlename');
             $dentist->lastname = $request->input('lastname');
+            $dentist->username = $request->input('username');
             $dentist->contact_number = $request->input('contact_number');
             $dentist->address = $request->input('address');
             $dentist->about = $request->input('about');
             $dentist->email = $request->input('email');
             $dentist->password = $request->input('password');
+            $dentist->attachment = 'attachment';
 
             // Upload new image if provided
             if ($request->hasFile('image')) {

@@ -96,13 +96,13 @@
                                                                     @endif
                                                                 </button>
                                                             </form>
-
+                                                            <!--
                                                             <button type="button" class="dropdown-item"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#editUserModal{{ $dentist->id }}">
                                                                 <i class="dw dw-edit2"></i>Edit
                                                             </button>
-
+                                                            -->
                                                             <form action="{{ route('dentist.destroy', $dentist->id) }}"
                                                                 method="POST" style="display: inline;"
                                                                 id="deleteForm{{ $dentist->id }}">
@@ -165,6 +165,11 @@
                                                                 <div class="form-group">
                                                                     <input type="text" name="lastname"
                                                                         class="form-control"  value="{{ $dentist->lastname }}" required>
+                                                                </div>
+                                                                <label>Username</label>
+                                                                <div class="form-group">
+                                                                    <input type="text" name="lastname"
+                                                                        class="form-control"  value="{{ $dentist->username }}" required>
                                                                 </div>
                                                                 <label>Contact Number</label>
                                                                 <div class="form-group">
@@ -269,6 +274,10 @@
                                                 <label>Last Name</label>
                                                 <div class="form-group">
                                                     <input type="text" name="lastname" class="form-control">
+                                                </div>
+                                                <label>Username</label>
+                                                <div class="form-group">
+                                                    <input type="text" name="username" class="form-control">
                                                 </div>
                                                 <label>Contact Number</label>
                                                 <div class="form-group">
