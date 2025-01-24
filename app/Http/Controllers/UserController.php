@@ -34,6 +34,7 @@ class UserController extends Controller
                 'middlename' => 'nullable|string|max:255',
                 'lastname' => 'required|string|max:255',
                 'email' => 'required|email|unique:users',
+                'username' => 'required|string|unique:users',
                 'password' => 'required|string|min:8',
                 'usertype' => 'required|integer',
                 
@@ -47,8 +48,10 @@ class UserController extends Controller
                 'middlename' => $validatedData['middlename'],
                 'lastname' => $validatedData['lastname'],
                 'email' => $validatedData['email'],
+                'username' => $validatedData['username'],
                 'password' => bcrypt($validatedData['password']),
                 'usertype' => $validatedData['usertype'],
+                'attachment' => 'N/A',
         
             ]);
             

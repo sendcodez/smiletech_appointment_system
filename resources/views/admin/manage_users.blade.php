@@ -167,6 +167,10 @@
                                                 <div class="form-group">
                                                     <input type="email" name="email" class="form-control">
                                                 </div>
+                                                <label>Username</label>
+                                                <div class="form-group">
+                                                    <input type="text" name="username" class="form-control">
+                                                </div>
                                                 <label>Password</label>
                                                 <div class="form-group">
                                                     <input type="password" name="password" class="form-control" required>
