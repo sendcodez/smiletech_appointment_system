@@ -93,23 +93,23 @@
 
                                     <thead>
                                         <tr>
-                                            <th class="no-print">#</th>
-                                            <th>Patient Name</th>
-                                            <th>Service</th>
-                                            <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Status</th>
+                                            <th>DATE</th>
+                                            <th>PATIENT NAME</th>
+                                            <th>SERVICE</th>
+                                            
+                                            <th>TIME</th>
+                                            <th>STATUS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse ($appointments as $key => $appointment)
                                             <tr>
-                                                <td class="no-print">{{ $loop->iteration }}</td>
+                                                <td>{{ $appointment->date }}</td>
                                                 <td>{{ ucfirst($appointment->user->firstname) }}
                                                     {{ ucfirst($appointment->user->lastname) }}</td>
                                                 <td>{{ $appointment->service ? $appointment->service->name : 'Not available' }}
                                                 </td>
-                                                <td>{{ $appointment->date }}</td>
+                                                
                                                 <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                                 <td>
                                                     @php

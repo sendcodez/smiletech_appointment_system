@@ -113,7 +113,7 @@
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
         <a href="{{ route('index') }}" class="navbar-brand p-0">
             <h1 class="m-2" style="color:#ff7400"> <img class="me-2" style="width:20%;"
-                    src="{{ asset('frontend/img/smiletech_logo.png') }}"
+                    src="{{ asset('web_images/' . $website->logo) }}"
                     alt="Image">{{ strtoupper($website->business_name) }}
             </h1>
         </a>
@@ -139,7 +139,7 @@
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="{{ asset('frontend/img/carousel-1.jpg') }}" alt="Image">
+                    <img class="w-100" src="{{ asset('web_images/' . $website->bg_image) }}" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Keep Your Teeth Healthy</h5>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('frontend/img/carousel-2.jpg') }}" alt="Image">
+                    <img class="w-100" src="{{ asset('web_images/' . $website->bg_image) }}" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Keep Your Teeth Healthy

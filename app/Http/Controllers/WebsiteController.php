@@ -97,6 +97,31 @@ class WebsiteController extends Controller
                 return redirect()->back()->with('error', 'Failed to update website data. Please try again.');
             }
         }
+
+        $bg = $request->file('bg');
+    
+        if ($bg) {
+           
+            $currentDateTime = now()->format('Ymd_His');
+        
+           
+            $originalFileName = $request->bg->getClientOriginalName();
+        
+           
+            $bgName = $currentDateTime . '_' . $originalFileName;
+        
+            
+            $destinationPath = public_path('web_images');
+        
+          
+            if ($bg->move($destinationPath, $bgName)) {
+                
+                $web->update(['bg_image' => $bgName]);
+            } else {
+                
+                return redirect()->back()->with('error', 'Failed to update website data. Please try again.');
+            }
+        }
     
         $user = Auth::user();
         $action = 'update_website';

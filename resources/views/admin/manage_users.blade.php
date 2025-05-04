@@ -33,20 +33,20 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            
                                             <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Status</th>
-                                            <th>User type</th>
-                                            <th>Date Added</th>
-                                            <th>Action</th>
+                                            <th>NAME</th>
+                                            <th>EMAIL</th>
+                                            <th>STATUS</th>
+                                            <th>USER TYPE</th>
+                                            <th>DATE ADDED</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($users as $user)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                
                                                 <td>{{ $user->id }}</td>
                                                 <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                                                 <td>{{ $user->email }}</td>

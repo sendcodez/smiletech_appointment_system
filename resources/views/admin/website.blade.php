@@ -118,7 +118,14 @@
                                                 <label class="text-label">About</label>
                                                 <textarea name="about" class="form-control">{{ $web->about }}</textarea>
                                             </div>
-                                        </div>                                        
+                                        </div>     
+                                        
+                                        <div class="col-lg-6 mb-2">
+                                            <div class="form-group">
+                                                <label class="text-label">Change Background Image</label>
+                                                <input type="file" name="bg" class="form-control" placeholder="Background Image">
+                                            </div>
+                                        </div>
                                         
                                     </div>
                                     <div class="col-12 d-flex justify-content-end">

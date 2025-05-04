@@ -19,8 +19,14 @@ class Service extends Model
         'status',
 
     ];
+    /*
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
     }
+        */
+    public function appointments()
+{
+    return $this->belongsToMany(Appointment::class, 'appointment_service');
+}
 }

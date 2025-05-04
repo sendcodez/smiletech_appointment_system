@@ -108,46 +108,60 @@ class AppointmentController extends Controller
         try {
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
-                'service_id' => 'required|exists:services,id',
+                'service_id' => 'required|array',
+                'service_id.*' => 'exists:services,id',
                 'date' => 'required|date',
                 'day' => 'required|string',
                 'time' => 'required|string',
+                'cancellation_reason' => 'nullable|string', // Validation for cancellation_reason
             ]);
-            $currentYear = date('Y'); // Get the current year
+    
+            $currentYear = date('Y');
             $randomInteger = random_int(10000000, 99999999);
-            // Generate a unique random reference number
+    
+            // Create the appointment
             $appointment = Appointment::create([
                 'user_id' => $validatedData['user_id'],
-                'service_id' => $validatedData['service_id'],
                 'date' => $validatedData['date'],
                 'day' => $validatedData['day'],
                 'time' => $validatedData['time'],
-                'reference_number' => $currentYear . $randomInteger, // Provide the generated reference number
+                'reference_number' => $currentYear . $randomInteger,
+                'cancellation_reason' => $validatedData['cancellation_reason'] ?? null, // Store reason if available
             ]);
-
-
+    
+            $appointment->services()->attach($validatedData['service_id']);
+    
             return back()->with('success', 'Service added successfully.');
         } catch (\Exception $e) {
-            $errorMessage = $e->getMessage();
-            return redirect()->back()->with('error', $errorMessage);
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
+    
 
-    public function cancel($id)
+
+    public function cancel(Request $request, $id)
     {
         // Find the appointment by ID
         $appointment = Appointment::findOrFail($id);
+        
+        // Check if the cancellation reason is provided
+        if ($request->has('cancellation_reason')) {
+            $appointment->cancellation_reason = $request->input('cancellation_reason');
+        }
+    
+        // Update the appointment status to cancelled
         $appointment->status = 4;
         $appointment->save();
-
+    
+        // Send cancellation email to user
         Mail::to($appointment->user->email)->send(new AppointmentCancelled($appointment));
         
+        // Log cancellation action if user is an admin
         if (Auth::user()->usertype === 1 || Auth::user()->usertype === 2) {
-            // Log the cancellation if the user is an admin
             $user = Auth::user();
             $action = 'cancel_appointment';
-            $description = 'Cancelled an appointment on ith reference number: ' . $appointment->reference_number;
-    
+            $description = 'Cancelled an appointment with reference number: ' . $appointment->reference_number;
+       
             ActivityLog::create([
                 'user_id' => $user->id,
                 'name' => $user->firstname,
@@ -155,8 +169,11 @@ class AppointmentController extends Controller
                 'description' => $description,
             ]);
         }
+    
+        // Return success response
         return redirect()->back()->with('success', 'Appointment cancelled successfully');
     }
+    
     public function show(string $id)
     {
         //
@@ -224,5 +241,34 @@ class AppointmentController extends Controller
         // Optionally, you can redirect the user back or return a response
         return redirect()->back()->with('success', 'Appointment completed successfully');
     }
+
+    public function reschedule(Request $request)
+{
+    try {
+        $validatedData = $request->validate([
+            'appointment_id' => 'required|exists:appointments,id',
+            'date' => 'required|date|after_or_equal:today',
+            'time' => 'required|string|in:morning,afternoon',
+        ]);
+
+        $appointment = Appointment::findOrFail($validatedData['appointment_id']);
+
+        // Optional: Prevent rescheduling if status is completed or cancelled
+        if (in_array($appointment->status, [3, 4])) {
+            return back()->with('error', 'Cannot reschedule a completed or cancelled appointment.');
+        }
+
+        $appointment->update([
+            'date' => $validatedData['date'],
+            'day' => \Carbon\Carbon::parse($validatedData['date'])->format('l'),
+            'time' => $validatedData['time'],
+        ]);
+
+        return back()->with('success', 'Appointment rescheduled successfully.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', $e->getMessage());
+    }
+}
+
 
 }

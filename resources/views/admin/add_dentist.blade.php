@@ -33,20 +33,20 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Image</th>
-                                            <th>User ID</th>
-                                            <th>Name</th>
-                                            <th>Contact Number</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                           
+                                            <th>IMAGE</th>
+                                            <th>USER ID</th>
+                                            <th>NAME</th>
+                                            <th>CONTACT NUMBER</th>
+                                            <th>ADDRESS</th>
+                                            <th>STATUS</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($dentists as $dentist)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                              
                                                 <td>
                                                     <img src="{{ asset('dentist_image/' . $dentist->image) }}"
                                                         alt="QR Code" style="max-width: 100px;">

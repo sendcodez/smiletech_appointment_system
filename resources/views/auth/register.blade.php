@@ -60,7 +60,7 @@
     @endsection
 
     @section('attachment')
-    <x-input-label for="attachment" :value="__('Attachment')" />
+    <x-input-label for="attachment" :value="__('Medical History')" />
     <x-text-input id="attachment" class="form-control" type="file" name="attachment" required autofocus
         accept=".pdf,.doc,.docx,.jpg,.png,.jpeg" />
     <x-input-error :messages="$errors->get('attachment')" class="mt-2" />

@@ -33,21 +33,21 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Full Name</th>
-                                            <th>Birthday</th>
-                                            <th>Age</th>
-                                            <th>Sex</th>
-                                            <th>Contact Number</th>
-                                            <th>Address</th>
-                                            <th>Occupation</th>
-                                            <th>Action</th>
+                                        
+                                            <th>FULL NAME</th>
+                                            <th>BIRTHDAY</th>
+                                            <th>AGE</th>
+                                            <th>SEX</th>
+                                            <th>CONTACT NUMBER</th>
+                                            <th>ADDRESS</th>
+                                            <th>OCCUPATION</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($patients as $patient)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                
                                                 <td>{{ $patient->firstname }} {{ $patient->middlename }}
                                                     {{ $patient->firstnamelastname }}</td>
                                                 <td>{{ $patient->birthday }} </td>

@@ -22,6 +22,7 @@ class Website extends Model
         'tagline',
         'customer_morning',
         'customer_afternoon',
+        'bg_image',
     ];
 
     protected $casts = [

@@ -22,24 +22,30 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Patient Name</th>
-                                            <th>Service</th>
-                                            <th>Date</th>
-                                            <th>Day</th>
-                                            <th>Time</th>
-                                            <th>Reference Number</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>DATE</th>
+                                            <th>PATIENT NAME</th>
+                                            <th>SERVICE</th>
+                                            <th>DAY</th>
+                                            <th>TIME</th>
+                                            <th>REFERENCE NUMBER</th>
+                                            <th>STATUS</th>
+                                            <th>REASON <i><small>(IF CANCELLED)</small></i></th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             @forelse($manage_app as $app)
-                                                <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $app->date }}</td>
                                                 <td>{{ $app->user->firstname }} {{ $app->user->lastname }}</td>
-                                                <td>{{ $app->service ? $app->service->name : "Not available" }}</td>
-                                                <td>{{ $app->date }}</td>
+                                                <td>
+                                                    @if ($app->services->isNotEmpty())
+                                                        {{ $app->services->pluck('name')->implode(', ') }}
+                                                    @else
+                                                        <span class="text-muted">Not available</span>
+                                                    @endif
+                                                </td>
+                                                
                                                 <td>{{ $app->day }}</td>
                                                 <td>{{ ucfirst($app->time) }}</td>
                                                 <td>{{ $app->reference_number }}</td>
@@ -54,6 +60,8 @@
                                                         <span class="badge badge-danger">Cancelled</span>
                                                     @endif
                                                 </td>
+                                                <td>{{ $app->cancellation_reason ?? '-' }}</td>
+
                                                 <td style="text-align: center">
                                                     <div class="dropdown ml-auto text-right">
                                                         <div class="btn-link text-center" data-toggle="dropdown">
@@ -85,14 +93,14 @@
                                                             @endif
 
                                                             @if ($app->status == 1 || $app->status == 2)
-                                                                <form action="{{ route('appointments.cancel', $app->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <button type="submit" class="dropdown-item cancel-btn">
-                                                                        <i class="dw dw-cancel"></i> Cancel
-                                                                    </button>
-                                                                </form>
+                                                            <form action="{{ route('appointments.cancel', $app->id) }}" method="POST" class="cancel-form">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="button" class="dropdown-item cancel-btn">
+                                                                    <i class="dw dw-cancel"></i> Cancel
+                                                                </button>
+                                                                <input type="hidden" name="cancellation_reason" id="cancellation_reason_{{ $app->id }}">
+                                                            </form>
                                                             @endif
 
                                                             @if ($app->status == 4 || $app->status == 3)
@@ -219,31 +227,53 @@
 
     <script>
 
-        document.querySelectorAll('.cancel-btn').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default form submission behavior
+document.querySelectorAll('.cancel-btn').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();  // Prevent the default form submission
 
-                const form = this.closest('form'); // Find the closest form element
+        const form = this.closest('form');  // Find the closest form element
 
-                // Display SweetAlert confirmation dialog
+        // Show confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show the second SweetAlert asking for a cancellation reason
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You won\'t be able to revert this!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Yes, cancel it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // If confirmed, submit the form
+                    title: 'Cancellation Reason',
+                    input: 'textarea',
+                    inputLabel: 'Please provide a reason for cancellation:',
+                    inputPlaceholder: 'Type your reason here...',
+                    inputAttributes: {
+                        'aria-label': 'Cancellation reason'
+                    },
+                    showCancelButton: true
+                }).then((inputResult) => {
+                    if (inputResult.isConfirmed) {
+                        // Append the reason as a hidden input in the form
+                        const reasonInput = document.createElement('input');
+                        reasonInput.type = 'hidden';
+                        reasonInput.name = 'cancellation_reason';
+                        reasonInput.value = inputResult.value;  // Capture the reason text
+
+                        // Append the reason input to the form
+                        form.appendChild(reasonInput);
+
+                        // Submit the form with the cancellation reason
                         form.submit();
                     }
                 });
-
-
-            });
+            }
         });
+    });
+});
+
 
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', function(event) {

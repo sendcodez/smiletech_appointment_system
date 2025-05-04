@@ -33,19 +33,19 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Price</th>
-                                            <th>Description</th>
-                                            <th>Status</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
+                                            
+                                            <th>NAME</th>
+                                            <th>PRICE</th>
+                                            <th>DESCRIPTION</th>
+                                            <th>STATUS</th>
+                                            <th>IMAGE</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($services as $service)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                             
                                                 <td>{{ $service->name }}</td>
                                                 <td>{{ $service->price }}</td>
                                                 <td>{{ $service->description }}</td>
