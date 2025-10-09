@@ -17,10 +17,11 @@ class ManageAppointmentController extends Controller
      */public function index()
     {
         $services = Service::all();
-        $manage_app = Appointment::all();
+        $manage_app = Appointment::orderBy('date', 'desc')->get();
+
 
         return view('admin.manage_appointment', compact('manage_app', 'services',));
-        
+
     }
 
     public function approve($id)
@@ -29,7 +30,7 @@ class ManageAppointmentController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment->status = 2;
         $appointment->save();
-       
+
         Mail::to($appointment->user->email)->send(new AppointmentApproved($appointment));
 
         if (Auth::user()->usertype === 1 || Auth::user()->usertype === 2) {
@@ -37,7 +38,7 @@ class ManageAppointmentController extends Controller
             $user = Auth::user();
             $action = 'approve_appointment';
             $description = 'Approved an appointment on ith reference number: ' . $appointment->reference_number;
-    
+
             ActivityLog::create([
                 'user_id' => $user->id,
                 'name' => $user->firstname,

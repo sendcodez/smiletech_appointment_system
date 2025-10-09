@@ -1,12 +1,12 @@
 <?php
- 
+
 namespace Database\Seeders;
- 
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
- 
+
 class UserSeeder extends Seeder
 {
     /**
@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
 
         DB::table('users')->insert([
+            'username' => 'admin',
             'firstname' => 'Admin',
             'middlename' => 'Admin',
             'lastname' => 'Admin',
@@ -25,6 +26,7 @@ class UserSeeder extends Seeder
             'usertype' => '1'
         ]);
         DB::table('users')->insert([
+            'username' => 'dentist',
             'firstname' => 'Dentist',
             'middlename' => 'Dentist',
             'lastname' => 'Dentist',
@@ -34,6 +36,7 @@ class UserSeeder extends Seeder
             'usertype' => '2'
         ]);
         DB::table('users')->insert([
+            'username' => 'patient',
             'firstname' => 'Patient',
             'middlename' => 'Patient',
             'lastname' => 'Patient',
