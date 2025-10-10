@@ -6,31 +6,28 @@
 
     <div class="content-body">
         <div class="container-fluid">
-                <!-- Breadcrumb Navigation -->
-                <div class="row page-titles mx-0">
-                    <div class="col-md-12">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page">FAQ</li>
-                                <li class="breadcrumb-item">
-                                    <a href="{{route('faq.categories')}}">Categories</a>
-                                </li>
-                                
-                            </ol>
-                        </nav>
-                    </div>
+            <!-- Breadcrumb Navigation -->
+            <div class="row page-titles mx-0">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('faq.categories') }}">Categories</a>
+                            </li>
+
+                        </ol>
+                    </nav>
                 </div>
+            </div>
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
                         <h4>FAQ</h4>
-
                     </div>
                 </div>
-
             </div>
             <!-- row -->
-
 
             <div class="row">
 
@@ -50,23 +47,76 @@
                                             <th>CATEGORY</th>
                                             <th>QUESTION</th>
                                             <th>ANSWER</th>
+                                            <th>STATUS</th>
                                             <th>ADDED AT</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($faqs as $faq)
-                                        <tr>
-                                            <td>{{ $faq->category->name ?? 'N/A' }}</td>
-                                            <td>{{ $faq->question }}</td>
-                                            <td>{{ $faq->answer }}</td>
-                                            <td>{{ $faq->created_at->format('Y-m-d H:i:s') }}</td>
-                                        </tr>
+                                            <tr>
+                                                <td>{{ $faq->category->name ?? 'N/A' }}</td>
+                                                <td>{{ $faq->question }}</td>
+                                                <td>{{ $faq->answer }}</td>
+                                                <td>
+                                                    @if ($faq->status == 1)
+                                                        <span class="badge badge-success">Active</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Inactive</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $faq->created_at->format('Y-m-d H:i:s') }}</td>
+                                                <td style="text-align: center">
+                                                    <div class="dropdown ml-auto text-right">
+                                                        <div class="btn-link text-center" data-toggle="dropdown">
+                                                            <svg width="24px" height="24px" viewBox="0 0 24 24"
+                                                                version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                    fill-rule="evenodd">
+                                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                                    <circle fill="#000000" cx="5" cy="12"
+                                                                        r="2"></circle>
+                                                                    <circle fill="#000000" cx="12" cy="12"
+                                                                        r="2"></circle>
+                                                                    <circle fill="#000000" cx="19" cy="12"
+                                                                        r="2"></circle>
+                                                                </g>
+                                                            </svg>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <form method="POST"
+                                                                    action="{{ route('update-faq-status', ['id' => $faq->id]) }}">
+                                                                    @csrf
+                                                                    @method('PATCH')
+                                                                    <input type="hidden" name="status"
+                                                                        value="{{ $faq->status == 1 ? 0 : 1 }}">
+                                                                    <button type="submit" class="dropdown-item status-btn"
+                                                                        style="text-decoration: none;">
+                                                                        @if ($faq->status == 1)
+                                                                            <span class="">Disapprove</span>
+                                                                        @else
+                                                                            <span class="">Approve</span>
+                                                                        @endif
+                                                                    </button>
+                                                                </form>
+
+                                                                <form action="{{ route('faq.destroy', $faq->id) }}"
+                                                                    method="POST" style="display: inline;"
+                                                                    id="deleteForm{{ $faq->id }}">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="button" class="dropdown-item delete-btn">
+                                                                        <i class="dw dw-trash"></i>Delete
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -94,23 +144,24 @@
                                                     <select name="faq_category_id" class="form-control" required>
                                                         <option value="">Select a Category</option>
                                                         @foreach ($categories as $category)
-                                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                            <option value="{{ $category->id }}">{{ $category->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                
+
                                                 <div class="form-group">
                                                     <label>Question</label>
                                                     <textarea class="form-control" name="question" style="height: 150px;" required></textarea>
                                                 </div>
-                                                
+
                                                 <div class="form-group">
                                                     <label>Answer</label>
                                                     <textarea class="form-control" name="answer" style="height: 150px;" required></textarea>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
 
                                     <div class="modal-footer">
@@ -143,15 +194,14 @@
             });
         });
         document.addEventListener('DOMContentLoaded', function() {
-            const statusCells = document.querySelectorAll('.service-status');
-
+            const statusCells = document.querySelectorAll('.faq-status');
             statusCells.forEach(cell => {
                 cell.addEventListener('click', function() {
-                    const serviceId = this.getAttribute('data-service-id');
+                    const faqId = this.getAttribute('data-faq-id');
                     const newStatus = this.textContent.trim() === 'Active' ? 0 : 1;
 
                     // Send AJAX request to update status
-                    fetch(`/update-service-status/${serviceId}`, {
+                    fetch(`/update-faq-status/${faqId}`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -205,5 +255,27 @@
             });
         });
 
+        document.querySelectorAll('.status-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission behavior
+
+                const form = this.closest('form'); // Find the closest form element
+
+                // Display SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If confirmed, submit the form
+                        form.submit();
+                    }
+                });
+            });
+        });
     </script>
 @endsection

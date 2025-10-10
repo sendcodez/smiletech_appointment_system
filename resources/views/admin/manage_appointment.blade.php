@@ -45,7 +45,7 @@
                                                         <span class="text-muted">Not available</span>
                                                     @endif
                                                 </td>
-                                                
+
                                                 <td>{{ $app->day }}</td>
                                                 <td>{{ ucfirst($app->time) }}</td>
                                                 <td>{{ $app->reference_number }}</td>

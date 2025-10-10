@@ -33,7 +33,7 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                        
+
                                             <th>FULL NAME</th>
                                             <th>BIRTHDAY</th>
                                             <th>AGE</th>
@@ -47,7 +47,7 @@
                                     <tbody>
                                         @forelse($patients as $patient)
                                             <tr>
-                                                
+
                                                 <td>{{ $patient->firstname }} {{ $patient->middlename }}
                                                     {{ $patient->firstnamelastname }}</td>
                                                 <td>{{ $patient->birthday }} </td>
@@ -230,11 +230,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                         @empty
                                             <tr>
-                                                <td colspan="7" style="text-align: center">No data available</td>
+                                                <td colspan="8" style="text-align: center">No data available</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -311,9 +309,9 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">

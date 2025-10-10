@@ -121,6 +121,47 @@ class FaqController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        // Find the doctor record
+        $faq = Faq::findOrFail($id);
+
+        // Soft delete the faq
+        $faq->delete();
+
+        $user = Auth::user();
+        $action = 'delete_faq';
+        $description = 'Deleted faq: ' . $faq->name;
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
+        return redirect()->back()->with('success', 'Faq deleted successfully.');
+    }
+
+
+    public function updateStatus(Request $request, $id)
+    {
+        $faq = Faq::findOrFail($id);
+        if ($request->has('status')) {
+            $faq->status = $request->status;
+            $faq->save();
+
+            $user = Auth::user();
+            $action = 'update_faq';
+            $description = 'Update a faq status: ' . $faq->name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return redirect()->back()->with('success', 'Faq status updated successfully.');
+        }
+        return redirect()->back()->with('error', 'No status provided.');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -164,8 +205,5 @@ class FaqController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Faq $faq)
-    {
-        //
-    }
+
 }

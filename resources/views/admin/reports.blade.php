@@ -96,7 +96,6 @@
                                             <th>DATE</th>
                                             <th>PATIENT NAME</th>
                                             <th>SERVICE</th>
-                                            
                                             <th>TIME</th>
                                             <th>STATUS</th>
                                         </tr>
@@ -109,7 +108,7 @@
                                                     {{ ucfirst($appointment->user->lastname) }}</td>
                                                 <td>{{ $appointment->service ? $appointment->service->name : 'Not available' }}
                                                 </td>
-                                                
+
                                                 <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                                 <td>
                                                     @php
@@ -143,7 +142,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="6" style="text-align: center">No data available</td>
+                                                <td colspan="5" style="text-align: center">No data available</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -184,7 +183,7 @@
             text-align:center;
             font-size:1.5rem;
           }
-            
+
   </style>
   <div style="text-align: center;">
       <img src="{{ asset('web_images/smiletech_logo.png') }}" alt="Left Logo" style="max-width: 110px;max-height:100px;position: absolute; top: 0; left: 0;">

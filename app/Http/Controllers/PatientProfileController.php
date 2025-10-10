@@ -17,6 +17,9 @@ class PatientProfileController extends Controller
 
         return view ('admin.profiling', compact('patients'));
     }
+    public function getAllPatients() {
+    return response()->json(Patient::all());
+}
 
     /**
      * Show the form for creating a new resource.
@@ -39,15 +42,15 @@ class PatientProfileController extends Controller
                 'birthday' => 'required|date',
                 'sex' => 'required|string|max:25',
                 'age' => 'required|integer',
-                'address' => 'required|string|max:255', 
-                'occupation' => 'nullable|string|max:255', 
-                'contact_number' => 'nullable|string', 
-              
+                'address' => 'required|string|max:255',
+                'occupation' => 'nullable|string|max:255',
+                'contact_number' => 'nullable|string',
+
             ]);
 
             // Save the form data into the database
             $patient = Patient::create([
-            
+
                 'firstname' => $validatedData['firstname'],
                 'middlename' => $validatedData['middlename'],
                 'lastname' => $validatedData['lastname'],
@@ -57,10 +60,10 @@ class PatientProfileController extends Controller
                 'address' => $validatedData['address'],
                 'occupation' => $validatedData['occupation'],
                 'contact_number' => $validatedData['contact_number'],
-        
+
             ]);
-            
-    
+
+
             $user = Auth::user();
             $action = 'added_patient';
             $description = 'Added a patient information: ' . $patient->firstname . ' '. $patient->lastname;
@@ -99,7 +102,7 @@ class PatientProfileController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            
+
             $patient = Patient::findOrFail($id);
 
             $request->validate([
@@ -109,13 +112,13 @@ class PatientProfileController extends Controller
                 'birthday' => 'required|date',
                 'sex' => 'required|string|max:25',
                 'age' => 'required|integer',
-                'address' => 'required|string|max:255', 
-                'occupation' => 'nullable|string|max:255', 
-                'contact_number' => 'nullable|string', 
-    
+                'address' => 'required|string|max:255',
+                'occupation' => 'nullable|string|max:255',
+                'contact_number' => 'nullable|string',
+
             ]);
 
-           
+
             $patient->firstname = $request->input('firstname');
             $patient->middlename = $request->input('middlename');
             $patient->lastname = $request->input('lastname');
@@ -125,12 +128,12 @@ class PatientProfileController extends Controller
             $patient->age = $request->input('age');
             $patient->birthday = $request->input('birthday');
             $patient->occupation = $request->input('occupation');
-     
-            
+
+
             $user = Auth::user();
             $action = 'update_patient';
             $description = 'Updated a information for:' . $patient->firstname . ' ' . $patient->lastname;
-    
+
             ActivityLog::create([
                 'user_id' => $user->id,
                 'name' => $user->firstname,

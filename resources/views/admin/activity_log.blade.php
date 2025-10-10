@@ -43,11 +43,11 @@
                                                 <td>{{ $activity->name }}</td>
                                                 <td>{{ $activity->description }}</td>
                                                 <td>{{ $activity->created_at->toDateString() }}</td>
-                                               
+
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="5" style="text-align: center">No data available</td>
+                                                <td colspan="4" style="text-align: center">No data available</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

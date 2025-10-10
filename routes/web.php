@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/add_services', [ServiceController::class, 'store'])->name('service.store');
     Route::patch('/update-service-status/{id}', [ServiceController::class, 'updateStatus'])->name('update-service-status');
     Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
+    Route::put('/service/{id}', [ServiceController::class, 'update'])->name('service.update');
 
     //USERS ROUTE
     Route::get('admin/users', [UserController::class, 'index'])->name('user.index');
@@ -121,15 +122,20 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/faq-categories', [FaqController::class, 'faq_category'])->name('faq.categories');
     Route::post('admin/add-faq-categories', [FaqController::class, 'faq_category_store'])->name('faq_categories.store');
     Route::post('admin/add-faqs', [FaqController::class, 'faq_store'])->name('faq.store');
+    Route::patch('/update-faq-status/{id}', [FaqController::class, 'updateStatus'])->name('update-faq-status');
+    Route::delete('/faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
 
     //REPORTS ROUTE
     Route::get('admin/reports', [ReportsController::class, 'index'])->name('reports.index');
     Route::post('/reports/filter', [ReportsController::class, 'filter'])->name('reports.filter');
 
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/appointments/completed', [AppointmentController::class, 'getCompleted'])->name('appointments.completed');
+    Route::get('/appointments/all', [AppointmentController::class, 'getAllAppointments'])->name('appointments.all');
+    Route::get('/patients/all', [PatientProfileController::class, 'getAllPatients'])->name('patients.all');
 });
 
 require __DIR__ . '/auth.php';

@@ -16,8 +16,10 @@ class PatientsAppointmentController extends Controller
         $services = Service::all();
         $patient_app = Appointment::where('status', 2)->get();
         return view('dentist.patients_app', compact('patient_app', 'services',  ));
-        
+
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

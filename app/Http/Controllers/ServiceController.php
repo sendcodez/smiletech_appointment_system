@@ -31,13 +31,13 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'price' => 'nullable|numeric',
-                'description' => 'required|string|max:255', 
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748' 
+                'description' => 'required|string|max:255',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748'
             ]);
             $image = $request->file('image');
 
@@ -48,15 +48,15 @@ class ServiceController extends Controller
             $image->move(public_path('service_image'), $imageName);
             // Save the form data into the database
             $service = Service::create([
-               
+
                 'name' => $validatedData['name'],
                 'description' => $validatedData['description'],
                 'price' => $validatedData['price'],
                 'image' => $imageName,
-        
+
             ]);
-            
-    
+
+
             $user = Auth::user();
             $action = 'added_service';
             $description = 'Added a service: ' . $service->name;
@@ -89,13 +89,6 @@ class ServiceController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -139,4 +132,37 @@ class ServiceController extends Controller
         }
         return redirect()->back()->with('error', 'No status provided.');
     }
+
+    public function update(Request $request, $id)
+{
+    $service = Service::findOrFail($id);
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'nullable|numeric',
+        'description' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    $service->name = $request->name;
+    $service->price = $request->price;
+    $service->description = $request->description;
+
+    // Handle image upload if new image is provided
+    if ($request->hasFile('image')) {
+        // Delete old image
+        if ($service->image && file_exists(public_path('service_image/' . $service->image))) {
+            unlink(public_path('service_image/' . $service->image));
+        }
+
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->extension();
+        $image->move(public_path('service_image'), $imageName);
+        $service->image = $imageName;
+    }
+
+    $service->save();
+
+    return redirect()->back()->with('success', 'Service updated successfully!');
+}
 }

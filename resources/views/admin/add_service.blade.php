@@ -33,7 +33,7 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            
+
                                             <th>NAME</th>
                                             <th>PRICE</th>
                                             <th>DESCRIPTION</th>
@@ -45,7 +45,7 @@
                                     <tbody>
                                         @forelse($services as $service)
                                             <tr>
-                                             
+
                                                 <td>{{ $service->name }}</td>
                                                 <td>{{ $service->price }}</td>
                                                 <td>{{ $service->description }}</td>
@@ -79,6 +79,17 @@
                                                             </svg>
                                                         </div>
                                                         <div class="dropdown-menu dropdown-menu-right">
+                                                            <button type="button" class="dropdown-item edit-btn"
+                                                                data-id="{{ $service->id }}"
+                                                                data-name="{{ $service->name }}"
+                                                                data-price="{{ $service->price }}"
+                                                                data-description="{{ $service->description }}"
+                                                                data-image="{{ asset('service_image/' . $service->image) }}"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editServiceModal{{ $service->id }}">
+                                                                <i class="dw dw-edit"></i>Edit
+                                                            </button>
+
                                                             <form method="POST"
                                                                 action="{{ route('update-service-status', ['id' => $service->id]) }}">
                                                                 @csrf
@@ -88,9 +99,9 @@
                                                                 <button type="submit" class="dropdown-item"
                                                                     style="text-decoration: none;">
                                                                     @if ($service->status == 1)
-                                                                        <span class="">Active</span>
-                                                                    @else
                                                                         <span class="">Inactive</span>
+                                                                    @else
+                                                                        <span class="">Active</span>
                                                                     @endif
                                                                 </button>
                                                             </form>
@@ -108,9 +119,70 @@
                                                     </div>
                                                 </td>
                                             </tr>
+
+                                            <!-- Edit Modal for each service -->
+                                            <div class="modal fade" id="editServiceModal{{ $service->id }}" tabindex="-1"
+                                                aria-labelledby="editServiceModalLabel{{ $service->id }}" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h3 class="text-center">Edit Service Information</h3>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="POST" action="{{ route('service.update', $service->id) }}"
+                                                                enctype="multipart/form-data">
+                                                                @csrf
+                                                                @method('PUT')
+
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label>Service Name</label>
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="name" class="form-control"
+                                                                                value="{{ $service->name }}" required>
+                                                                        </div>
+                                                                        <label>Price</label>
+                                                                        <div class="form-group">
+                                                                            <input type="number" name="price" class="form-control"
+                                                                                value="{{ $service->price }}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Short Description</label>
+                                                                            <textarea class="form-control" name="description" required>{{ $service->description }}</textarea>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Current Image</label>
+                                                                            <div>
+                                                                                <img src="{{ asset('service_image/' . $service->image) }}"
+                                                                                    alt="Current Image" style="max-width: 150px; margin-bottom: 10px;">
+                                                                            </div>
+                                                                            <label>Change Image (optional)</label>
+                                                                            <input type="file" name="image" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                                        <span>Cancel</span>
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary ml-1">
+                                                                        <span>Update</span>
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @empty
                                             <tr>
-                                                <td colspan="7" style="text-align: center">No data available</td>
+                                                <td colspan="6" style="text-align: center">No data available</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -120,6 +192,7 @@
                     </div>
                 </div>
 
+                <!-- Add Service Modal -->
                 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
