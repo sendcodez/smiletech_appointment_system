@@ -77,7 +77,7 @@
                                     <h4 class="text-center mb-4">Sign up your account</h4>
                                     <form method="POST" action="{{ route('register') }}"  enctype="multipart/form-data">
                                         @csrf
-                                    
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -108,20 +108,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
+
                                         <div class="form-group">
                                             @yield('terms')
                                         </div>
-                                    
+
                                         <div class="text-center mt-4">
                                             @yield('button')
                                         </div>
                                     </form>
-                                    
+
                                     <div class="new-account mt-3">
                                         @yield('already')
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>

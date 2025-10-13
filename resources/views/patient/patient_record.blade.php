@@ -14,12 +14,12 @@
             <!-- row -->
             <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
                 <div class="row">
-                    <div class="col-xl-12"> 
+                    <div class="col-xl-12">
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="full-map-area mb-4">
-                                    <img src="{{ asset('images/tooth.jpg') }}" alt=""> 
+                                    <img src="{{ asset('images/tooth.jpg') }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -36,18 +36,17 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            
+
                                             <th>DATE</th>
                                             <th>TIME</th>
                                             <th>TOOTH NUMBER</th>
-                                            <th>DESCRIPTION</th>       
+                                            <th>DESCRIPTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             @forelse($results as $res)
                                                 <td>{{ $res->date }}</td>
-                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ date('h:i A', strtotime($res->time)) }}</td>
                                                 <td>{{ $res->number }}</td>
                                                 <td>{{ $res->description }}</td>
