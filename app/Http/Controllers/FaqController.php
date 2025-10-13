@@ -34,20 +34,22 @@ class FaqController extends Controller
     $search = $request->input('search');
     $category = $request->input('category');
 
-    // Query FAQs based on search and category (if provided)
-    $faqs = Faq::when($search, function ($query, $search) {
-        return $query->where('question', 'like', '%' . $search . '%');
-    })
-    ->when($category, function ($query, $category) {
-        return $query->where('faq_category_id', $category);
-    })
-    ->get();
+    // Query FAQs with status = 1, and apply filters if provided
+    $faqs = Faq::where('status', 1)
+        ->when($search, function ($query, $search) {
+            return $query->where('question', 'like', '%' . $search . '%');
+        })
+        ->when($category, function ($query, $category) {
+            return $query->where('faq_category_id', $category);
+        })
+        ->get();
 
-    // Fetch all categories for the category filter (if applicable)
+    // Fetch all categories for the category filter
     $categories = FaqCategory::all();
 
     return view('patient.faq_patient', compact('faqs', 'categories'));
 }
+
 
     public function faq_store(Request $request)
     {
