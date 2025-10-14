@@ -64,7 +64,7 @@ class FaqController extends Controller
             $faq = Faq::create([
                 'faq_category_id' => $validatedData['faq_category_id'],
                 'question' => $validatedData['question'],
-                'answer' => $validatedData['question'],
+                'answer' => $validatedData['answer'],
             ]);
 
             $user = Auth::user();
