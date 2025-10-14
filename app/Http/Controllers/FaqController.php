@@ -69,7 +69,7 @@ class FaqController extends Controller
 
             $user = Auth::user();
             $action = 'added_faq';
-            $description = 'Added a faq: ' . $faq->name;
+            $description = 'Added a faq: ' . $faq->question;
             ActivityLog::create([
                 'user_id' => $user->id,
                 'name' => $user->firstname,
@@ -133,7 +133,7 @@ class FaqController extends Controller
 
         $user = Auth::user();
         $action = 'delete_faq';
-        $description = 'Deleted faq: ' . $faq->name;
+        $description = 'Deleted faq: ' . $faq->question;
         ActivityLog::create([
             'user_id' => $user->id,
             'name' => $user->firstname,
@@ -153,7 +153,7 @@ class FaqController extends Controller
 
             $user = Auth::user();
             $action = 'update_faq';
-            $description = 'Update a faq status: ' . $faq->name;
+            $description = 'Update a faq status: ' . $faq->status;
             ActivityLog::create([
                 'user_id' => $user->id,
                 'name' => $user->firstname,
