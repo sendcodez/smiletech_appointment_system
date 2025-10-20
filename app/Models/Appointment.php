@@ -20,22 +20,24 @@ class Appointment extends Model
         'time',
         'remarks',
         'reference_number',
-        
+
     ];
-    
+
     public function service()
     {
         return $this->belongsTo(Service::class);
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function services()
+    // In App\Models\Appointment.php
+
+public function services()
 {
-    return $this->belongsToMany(Service::class, 'appointment_service');
-}
-    
+    return $this->belongsToMany(Service::class, 'appointment_service', 'appointment_id', 'service_id');
 }
 
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+}

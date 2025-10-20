@@ -136,6 +136,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/appointments/completed', [AppointmentController::class, 'getCompleted'])->name('appointments.completed');
     Route::get('/appointments/all', [AppointmentController::class, 'getAllAppointments'])->name('appointments.all');
     Route::get('/patients/all', [PatientProfileController::class, 'getAllPatients'])->name('patients.all');
+    Route::get('/users/all', [UserController::class, 'getUser'])->name('users.all');
 });
 
 require __DIR__ . '/auth.php';

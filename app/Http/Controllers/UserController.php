@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.manage_users', compact('users')); 
+        return view('admin.manage_users', compact('users'));
     }
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         try {
             $validatedData = $request->validate([
                 'firstname' => 'required|string|max:255',
@@ -37,13 +37,13 @@ class UserController extends Controller
                 'username' => 'required|string|unique:users',
                 'password' => 'required|string|min:8',
                 'usertype' => 'required|integer',
-                
-                
+
+
             ]);
-        
+
             // Save the form data into the database
             $user = User::create([
-               
+
                 'firstname' => $validatedData['firstname'],
                 'middlename' => $validatedData['middlename'],
                 'lastname' => $validatedData['lastname'],
@@ -52,10 +52,10 @@ class UserController extends Controller
                 'password' => bcrypt($validatedData['password']),
                 'usertype' => $validatedData['usertype'],
                 'attachment' => 'N/A',
-        
+
             ]);
-            
-    
+
+
             $user = Auth::user();
             $action = 'added_service';
             $description = 'Added a user: ' . $user->firstname . $user->lastname;
@@ -139,4 +139,9 @@ class UserController extends Controller
         }
         return redirect()->back()->with('error', 'No status provided.');
     }
+
+           public function getUser() {
+    return response()->json(User::all());
+}
+
 }
