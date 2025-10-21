@@ -221,7 +221,7 @@
                     <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/after.jpg') }}" style="object-fit: cover;">
                 </div>
             </div>
-            
+
             <!-- Two Services Beside Before and After Image -->
             <div class="col-lg-7">
                 <div class="section-title mb-5">
@@ -325,38 +325,40 @@
                 <!-- Image on the left -->
                 <div class="col-md-6">
                     <div class="full-map-area mb-4">
-                        <img src="{{ asset('images/smilemap2.jpg') }}" alt="Location Map" class="img-fluid zoomable" style="width: 24rem; height: 14rem;" data-bs-toggle="modal" data-bs-target="#imageModal"> 
+                        <img src="{{ asset('images/smilemap2.jpg') }}" alt="Location Map" class="img-fluid zoomable" style="width: 24rem; height: 14rem;" data-bs-toggle="modal" data-bs-target="#imageModal">
                         <i class="flaticon-381-location-4"></i>
                     </div>
                 </div>
-    
+
                 <!-- Text on the right -->
                 <div class="col-md-6 text-center text-md-start">
                     <p class="mb-0">We're located here at</p>
                     <p class="mb-0" style="font-weight: bold;font-size:2rem;" >Brgy. Lantic, Carmona City, Cavite</p>
                     <p class="m-0"><i class="fa fa-phone-alt me-2"></i>{{ $website->contact_number }}</p>
-                  
+
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Modal for zooming the image -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="imageModalLabel">Smiletech</h5>
+                    <br>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <a href="https://maps.app.goo.gl/EvnCbiVyWpKh2uax6" target="_blank">&nbsp &nbsp Click here to view on map</a>
                 <div class="modal-body text-center">
                     <img src="{{ asset('images/smilemap2.jpg') }}" alt="Location Map" class="img-fluid zoomed-image">
                 </div>
             </div>
         </div>
     </div>
-    
-    
+
+
     <!-- Footer End -->
 
 
