@@ -40,4 +40,27 @@ public function user()
     return $this->belongsTo(User::class);
 }
 
+// App/Models/Appointment.php
+
+public function scopePending($query)
+{
+    return $query->where('status', 1);
+}
+
+public function scopeApproved($query)
+{
+    return $query->where('status', 2);
+}
+
+public function scopeCompleted($query)
+{
+    return $query->where('status', 3);
+}
+
+public function scopeCancelled($query)
+{
+    return $query->where('status', 4);
+}
+
+
 }

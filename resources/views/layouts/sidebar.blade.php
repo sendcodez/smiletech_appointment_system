@@ -151,11 +151,20 @@
                                 <span class="nav-text">Dashboard</span>
                             </a>
                         </li>
-                        <li><a href="{{ route('manage_app.index') }}" class="ai-icon" aria-expanded="false">
+                        <li>
+                            <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                                 <i class="flaticon-381-calendar"></i>
                                 <span class="nav-text">Appointments</span>
                             </a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{ route('status.pending') }}">Pending</a></li>
+                                <li><a href="{{ route('status.approved') }}">Approved</a></li>
+                                <li><a href="{{ route('status.completed') }}">Completed</a></li>
+                                <li><a href="{{ route('status.cancelled') }}">Cancelled</a></li>
+                            </ul>
                         </li>
+
+
                         <li><a href="{{ route('dentist.index') }}" class="ai-icon" aria-expanded="false">
                                 <i class="fa fa-stethoscope"></i>
                                 <span class="nav-text">Dentist</span>
@@ -224,17 +233,17 @@
                                 <span class="nav-text">Records</span>
                             </a>
                         </li>
-                       <!-- <li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
+                        <!-- <li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
                                 <i class="fa fa-comments-o"></i>
                                 <span class="nav-text">Customer Support</span>
                             </a>
                         </li>
                     -->
-                    <li><a href="{{ route('faq.patient') }}" class="ai-icon" aria-expanded="false">
-                        <i class="fa fa-question-circle-o"></i>
-                        <span class="nav-text">FAQ</span>
-                    </a>
-                </li>
+                        <li><a href="{{ route('faq.patient') }}" class="ai-icon" aria-expanded="false">
+                                <i class="fa fa-question-circle-o"></i>
+                                <span class="nav-text">FAQ</span>
+                            </a>
+                        </li>
                     @endif
 
                     @if (Auth::user()->usertype == '2')

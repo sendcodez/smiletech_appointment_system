@@ -62,6 +62,7 @@
                 <a href="{{ route ('about') }}" class="nav-item nav-link ">About</a>
                 <a href="{{ route ('services') }}" class="nav-item nav-link">Services</a>
                 <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentists</a>
+                <a href="{{ route ('faq_public') }}" class="nav-item nav-link">FAQ</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>

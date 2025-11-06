@@ -13,7 +13,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -93,6 +93,7 @@
                 <a href="{{ route ('about') }}" class="nav-item nav-link">About</a>
                 <a href="{{ route ('services') }}" class="nav-item nav-link">Services</a>
                 <a href="{{ route ('dentist') }}" class="nav-item nav-link active">Dentists</a>
+                <a href="{{ route ('faq_public') }}" class="nav-item nav-link">FAQ</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>
@@ -118,7 +119,7 @@
                 <div class="team-item">
                     <div class="position-relative rounded-top" style="z-index: 1;">
                         <img class="img-fluid rounded-top w-100" src="{{ asset('dentist_image/' . $dentist->image) }}" alt="{{ $dentist->firstname }}">
-                     
+
                     </div>
                     <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
                         <h4 class="mb-2">{{ $dentist->firstname }} {{ $dentist->lastname }}</h4>
@@ -131,7 +132,7 @@
     </div>
 </div>
 <!-- Team End -->
-    
+
 
 
     <div class="container-fluid text-light py-4" style="background: #051225;">
@@ -140,7 +141,7 @@
                 <div class="col-md-12 text-center text-md-start">
                     <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="#">Smiletech</a>. All Rights Reserved.</p>
                 </div>
-                
+
             </div>
         </div>
     </div>

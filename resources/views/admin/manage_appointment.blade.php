@@ -29,14 +29,16 @@
                                             <th>TIME</th>
                                             <th>REFERENCE NUMBER</th>
                                             <th>STATUS</th>
-                                            <th>REASON <i><small>(IF CANCELLED)</small></i></th>
+                                            @if (request()->routeIs('status.cancelled'))
+                                                <th>REASON </th>
+                                            @endif
                                             <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            @forelse($manage_app as $app)
-                                            <td>{{ $app->date }}</td>
+                                        @forelse($manage_app as $app)
+                                            <tr>
+                                                <td>{{ $app->date }}</td>
                                                 <td>{{ $app->user->firstname }} {{ $app->user->lastname }}</td>
                                                 <td>
                                                     @if ($app->services->isNotEmpty())
@@ -45,7 +47,6 @@
                                                         <span class="text-muted">Not available</span>
                                                     @endif
                                                 </td>
-
                                                 <td>{{ $app->day }}</td>
                                                 <td>{{ ucfirst($app->time) }}</td>
                                                 <td>{{ $app->reference_number }}</td>
@@ -60,7 +61,10 @@
                                                         <span class="badge badge-danger">Cancelled</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $app->cancellation_reason ?? '-' }}</td>
+                                                @if (request()->routeIs('status.cancelled'))
+                                                    <td>{{ $app->cancellation_reason }}</td>
+                                                @endif
+
 
                                                 <td style="text-align: center">
                                                     <div class="dropdown ml-auto text-right">
@@ -93,38 +97,42 @@
                                                             @endif
 
                                                             @if ($app->status == 1 || $app->status == 2)
-                                                            <form action="{{ route('appointments.cancel', $app->id) }}" method="POST" class="cancel-form">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button type="button" class="dropdown-item cancel-btn">
-                                                                    <i class="dw dw-cancel"></i> Cancel
-                                                                </button>
-                                                                <input type="hidden" name="cancellation_reason" id="cancellation_reason_{{ $app->id }}">
-                                                            </form>
+                                                                <form action="{{ route('appointments.cancel', $app->id) }}"
+                                                                    method="POST" class="cancel-form">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button type="button" class="dropdown-item cancel-btn">
+                                                                        <i class="dw dw-cancel"></i> Cancel
+                                                                    </button>
+                                                                    <input type="hidden" name="cancellation_reason"
+                                                                        id="cancellation_reason_{{ $app->id }}">
+                                                                </form>
                                                             @endif
 
                                                             @if ($app->status == 4 || $app->status == 3)
-                                                            <form action="{{ route('appointments.destroy', $app->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item delete-btn">
-                                                                    <i class="dw dw-cancel"></i> Remove
-                                                                </button>
-                                                            </form>
+                                                                <form
+                                                                    action="{{ route('appointments.destroy', $app->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="dropdown-item delete-btn">
+                                                                        <i class="dw dw-cancel"></i> Remove
+                                                                    </button>
+                                                                </form>
                                                             @endif
 
                                                         </div>
                                                     </div>
                                                 </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7" style="text-align: center">No data available</td>
-                                        </tr>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="9" style="text-align: center">No data available</td>
+                                            </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>
@@ -226,53 +234,53 @@
 
 
     <script>
+        document.querySelectorAll('.cancel-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default form submission
 
-document.querySelectorAll('.cancel-btn').forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.preventDefault();  // Prevent the default form submission
+                const form = this.closest('form'); // Find the closest form element
 
-        const form = this.closest('form');  // Find the closest form element
-
-        // Show confirmation dialog
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You won\'t be able to revert this!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, cancel it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Show the second SweetAlert asking for a cancellation reason
+                // Show confirmation dialog
                 Swal.fire({
-                    title: 'Cancellation Reason',
-                    input: 'textarea',
-                    inputLabel: 'Please provide a reason for cancellation:',
-                    inputPlaceholder: 'Type your reason here...',
-                    inputAttributes: {
-                        'aria-label': 'Cancellation reason'
-                    },
-                    showCancelButton: true
-                }).then((inputResult) => {
-                    if (inputResult.isConfirmed) {
-                        // Append the reason as a hidden input in the form
-                        const reasonInput = document.createElement('input');
-                        reasonInput.type = 'hidden';
-                        reasonInput.name = 'cancellation_reason';
-                        reasonInput.value = inputResult.value;  // Capture the reason text
+                    title: 'Are you sure?',
+                    text: 'You won\'t be able to revert this!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, cancel it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show the second SweetAlert asking for a cancellation reason
+                        Swal.fire({
+                            title: 'Cancellation Reason',
+                            input: 'textarea',
+                            inputLabel: 'Please provide a reason for cancellation:',
+                            inputPlaceholder: 'Type your reason here...',
+                            inputAttributes: {
+                                'aria-label': 'Cancellation reason'
+                            },
+                            showCancelButton: true
+                        }).then((inputResult) => {
+                            if (inputResult.isConfirmed) {
+                                // Append the reason as a hidden input in the form
+                                const reasonInput = document.createElement('input');
+                                reasonInput.type = 'hidden';
+                                reasonInput.name = 'cancellation_reason';
+                                reasonInput.value = inputResult
+                                    .value; // Capture the reason text
 
-                        // Append the reason input to the form
-                        form.appendChild(reasonInput);
+                                // Append the reason input to the form
+                                form.appendChild(reasonInput);
 
-                        // Submit the form with the cancellation reason
-                        form.submit();
+                                // Submit the form with the cancellation reason
+                                form.submit();
+                            }
+                        });
                     }
                 });
-            }
+            });
         });
-    });
-});
 
 
         document.querySelectorAll('.delete-btn').forEach(button => {
@@ -298,6 +306,5 @@ document.querySelectorAll('.cancel-btn').forEach(button => {
                 });
             });
         });
-
     </script>
 @endsection

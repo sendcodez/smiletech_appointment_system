@@ -56,8 +56,8 @@ class FaqController extends Controller
         try {
             $validatedData = $request->validate([
                 'faq_category_id' => 'required|string|max:255',
-                'question' => 'required|string|max:255',
-                'answer' => 'required|string|max:255',
+                'question' => 'required|string',
+                'answer' => 'required|string',
             ]);
 
             // Save the form data into the database

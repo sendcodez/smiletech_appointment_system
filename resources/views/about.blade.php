@@ -13,7 +13,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -93,6 +93,7 @@
                 <a href="{{ route ('about') }}" class="nav-item nav-link active">About</a>
                 <a href="{{ route ('services') }}" class="nav-item nav-link">Services</a>
                 <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentists</a>
+                <a href="{{ route ('faq_public') }}" class="nav-item nav-link">FAQ</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>
@@ -112,7 +113,7 @@
                         <h1 class="display-5 mb-0">The World's Best Dental Clinic That You Can Trust</h1>
                     </div>
                     <p class="mb-4">{{$website->about}}</p>
-                    
+
                     <a href="{{ route ('login') }}" class="btn btn-secondary py-3 px-5 mt-4 wow zoomIn" data-wow-delay="0.6s">Make Appointment</a>
                 </div>
                 <div class="col-lg-5" style="min-height: 500px;">
@@ -131,7 +132,7 @@
                 <div class="col-md-12 text-center text-md-start">
                     <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="#">Smiletech</a>. All Rights Reserved.</p>
                 </div>
-                
+
             </div>
         </div>
     </div>

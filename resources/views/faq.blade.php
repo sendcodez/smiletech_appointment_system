@@ -37,22 +37,14 @@
         height: 300px; /* Set a fixed height to maintain aspect ratio */
         object-fit: cover; /* Ensure the image covers the entire container */
     }
-    .twentytwenty-container {
-        max-width: 100%;
-        /* Ensure it doesn't exceed the parent width */
-        max-height: 600px;
-        /* Set a max height to avoid stretching */
-        overflow: hidden;
-        /* Prevent overflow of the images */
-    }
+    .footer-fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
 
-    .twentytwenty-container img {
-        width: 100%;
-        height: 100%;
-        /* Maintain the aspect ratio */
-        object-fit: cover;
-        /* Ensure the image fits nicely without stretching */
-    }
 </style>
 <body>
     <!-- Spinner Start -->
@@ -106,10 +98,10 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
                 <a href="{{ route ('index') }}" class="nav-item nav-link">Home</a>
-                <a href="{{ route ('about') }}" class="nav-item nav-link">About</a>
-                <a href="{{ route ('services') }}" class="nav-item nav-link active">Services</a>
+                <a href="{{ route ('about') }}" class="nav-item nav-link ">About</a>
+                <a href="{{ route ('services') }}" class="nav-item nav-link">Services</a>
                 <a href="{{ route ('dentist') }}" class="nav-item nav-link">Dentists</a>
-                <a href="{{ route ('faq_public') }}" class="nav-item nav-link">FAQ</a>
+                <a href="{{ route ('faq_public') }}" class="nav-item nav-link active">FAQ</a>
             </div>
             <a href="{{ route ('login') }}" class="btn btn-secondary py-2 px-4 ms-3">Appointment</a>
         </div>
@@ -117,91 +109,72 @@
     <!-- Navbar End -->
 
 
-<!-- Service Start -->
-<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+
+
+    <!-- FAQ Start -->
+  <div class="d-flex justify-content-between mb-4">
+            <!-- Search Bar -->
+            <form method="GET" action="{{ route('faq_public') }}" class="form-inline w-50">
+                <div class="form-group w-100">
+                    <input type="text" name="search" class="form-control w-100" placeholder="Search FAQs..."
+                        value="{{ request('search') }}">
+                </div>
+            </form>
+
+            <!-- Category Filter -->
+            <form method="GET" action="{{ route('faq_public') }}" class="form-inline w-50">
+                <div class="form-group w-100">
+                    <select name="category" class="form-control w-100" onchange="this.form.submit()">
+                        <option value="">Select Category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+        </div>
+    <div class="accordion" id="faqAccordion">
+    @forelse($faq as $item)
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ $item->id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse{{ $item->id }}" aria-expanded="false"
+                    aria-controls="collapse{{ $item->id }}">
+                    {{ $item->question }}
+                </button>
+            </h2>
+            <div id="collapse{{ $item->id }}" class="accordion-collapse collapse"
+                aria-labelledby="heading{{ $item->id }}" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    {!! nl2br(e($item->answer)) !!}
+                </div>
+            </div>
+        </div>
+    @empty
+        <div class="alert alert-info text-center mt-3">
+            No frequently asked questions available at the moment.
+        </div>
+    @endforelse
+</div>
+
+    <!-- FAQ -->
+
+   <div class="container-fluid text-light py-4 footer-fixed-bottom" style="background: #051225;">
     <div class="container">
-        <div class="row g-5 mb-5">
-            <!-- Before and After Image -->
-            <div class="col-lg-5 wow zoomIn" data-wow-delay="0.3s" style="min-height: 400px;">
-                <div class="twentytwenty-container position-relative h-100 rounded overflow-hidden">
-                    <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/before.jpg') }}" style="object-fit: cover;">
-                    <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/after.jpg') }}" style="object-fit: cover;">
-                </div>
+        <div class="row g-0">
+            <div class="col-md-12 text-center text-md-start">
+                <p class="mb-md-0">&copy;
+                    <a class="text-white border-bottom" href="#">Smiletech</a>.
+                    All Rights Reserved.
+                </p>
             </div>
-
-            <!-- Two Services Beside Before and After Image -->
-            <div class="col-lg-7">
-                <div class="section-title mb-5">
-                    <h5 class="position-relative d-inline-block text-secondary text-uppercase">Our Services</h5>
-                    <h1 class="display-5 mb-0">We Offer The Best Quality Dental Services</h1>
-                </div>
-                <div class="row g-5">
-                    @foreach($services->take(2) as $service)
-                    <div class="col-md-6 service-item wow zoomIn" data-wow-delay="0.6s">
-                        <div class="rounded-top overflow-hidden">
-                            <img class="img-fluid service-image" src="{{ asset('service_image/' . $service->image) }}" alt="{{ $service->name }}">
-                        </div>
-                        <div class="position-relative bg-light rounded-bottom text-center p-4">
-                            <h2 class="m-0">{{ strtoupper($service->name) }}</h2>
-                            <p class="m-0">{{ $service->description }}</p>
-                            <h4 class="m-0">₱ {{ $service->price }}</h4>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
-        <!-- Three Services Below -->
-        <div class="row g-5">
-            @foreach($services->slice(2, 3) as $service) <!-- Display exactly 3 services -->
-            <div class="col-md-4 service-item wow zoomIn" data-wow-delay="0.6s">
-                <div class="rounded-top overflow-hidden">
-                    <img class="img-fluid service-image" src="{{ asset('service_image/' . $service->image) }}" alt="{{ $service->name }}">
-                </div>
-                <div class="position-relative bg-light rounded-bottom text-center p-4">
-                    <h2 class="m-0">{{ strtoupper($service->name) }}</h2>
-                    <p class="m-0">{{ $service->description }}</p>
-                    <h4 class="m-0">₱ {{ $service->price }}</h4>
-                </div>
-            </div>
-            @endforeach
-        </div>
-
-        <!-- Additional Rows of 3 Services (if there are more) -->
-        <div class="row g-5">
-            @foreach($services->slice(5) as $service) <!-- Display any remaining services after the first 5 -->
-            <div class="col-md-4 service-item wow zoomIn" data-wow-delay="0.6s">
-                <div class="rounded-top overflow-hidden">
-                    <img class="img-fluid service-image" src="{{ asset('service_image/' . $service->image) }}" alt="{{ $service->name }}">
-                </div>
-                <div class="position-relative bg-light rounded-bottom text-center p-4">
-                    <h2 class="m-0">{{ strtoupper($service->name) }}</h2>
-                    <p class="m-0">{{ $service->description }}</p>
-                    <h4 class="m-0">₱ {{ $service->price }}</h4>
-                </div>
-            </div>
-            @endforeach
         </div>
     </div>
 </div>
-<!-- Service End -->
 
-
-
-
-
-
-    <div class="container-fluid text-light py-4" style="background: #051225;">
-        <div class="container">
-            <div class="row g-0">
-                <div class="col-md-12 text-center text-md-start">
-                    <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="#">Smiletech</a>. All Rights Reserved.</p>
-                </div>
-
-            </div>
-        </div>
-    </div>
     <!-- Footer End -->
 
 
@@ -209,7 +182,7 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('frontend/lib/wow/wow.min.js ') }}"></script>
     <script src="{{ asset('frontend/lib/easing/easing.min.js') }}"></script>
     <script src="{{ asset('frontend/lib/waypoints/waypoints.min.js') }}"></script>

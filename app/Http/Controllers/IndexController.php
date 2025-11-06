@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Website;
 use App\Models\Dentist;
 use App\Models\Service;
+use App\Models\Faq;
+use App\Models\FaqCategory;
 class IndexController extends Controller
 {
     /**
@@ -39,6 +41,30 @@ class IndexController extends Controller
         $website = Website::first();
         return view('dentist', compact('website','services','dentists'));
     }
+
+
+
+    public function faq_public(Request $request)
+{
+    $website = Website::first();
+    $search = $request->input('search');
+    $category = $request->input('category');
+
+    // Query FAQs with status = 1, and apply filters if provided
+    $faq = Faq::where('status', 1)
+        ->when($search, function ($query, $search) {
+            return $query->where('question', 'like', '%' . $search . '%');
+        })
+        ->when($category, function ($query, $category) {
+            return $query->where('faq_category_id', $category);
+        })
+        ->get();
+
+    // Fetch all categories for the category filter
+    $categories = FaqCategory::all();
+
+    return view('faq', compact('faq', 'categories','website'));
+}
 
     /**
      * Show the form for creating a new resource.

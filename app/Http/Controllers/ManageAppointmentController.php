@@ -24,6 +24,40 @@ class ManageAppointmentController extends Controller
 
     }
 
+    public function pending()
+{
+    $services = Service::all();
+    $manage_app = Appointment::pending()->orderBy('date', 'desc')->get();
+
+    return view('admin.manage_appointment', compact('manage_app', 'services'));
+}
+
+public function approved()
+{
+    $services = Service::all();
+    $manage_app = Appointment::approved()->orderBy('date', 'desc')->get();
+
+    return view('admin.manage_appointment', compact('manage_app', 'services'));
+}
+
+public function completed()
+{
+    $services = Service::all();
+    $manage_app = Appointment::completed()->orderBy('date', 'desc')->get();
+
+    return view('admin.manage_appointment', compact('manage_app', 'services'));
+}
+
+
+public function cancelled()
+{
+    $services = Service::all();
+    $manage_app = Appointment::cancelled()->orderBy('date', 'desc')->get();
+
+    return view('admin.manage_appointment', compact('manage_app', 'services'));
+}
+
+
     public function approve($id)
     {
         // Find the appointment by ID

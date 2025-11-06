@@ -36,6 +36,7 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/about', [IndexController::class, 'about'])->name('about');
 Route::get('/services', [IndexController::class, 'services'])->name('services');
 Route::get('/dentist', [IndexController::class, 'dentist'])->name('dentist');
+Route::get('/public/faq', [IndexController::class, 'faq_public'])->name('faq_public');
 
 Route::get('login', [IndexController::class, 'login'])->name('login');
 
@@ -93,9 +94,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/appointments/{id}/complete', [AppointmentController::class, 'complete'])->name('appointments.complete');
     Route::put('/appointments/reschedule', [AppointmentController::class, 'reschedule'])->name('appointments.reschedule');
 
+    Route::get('/status/pending', [ManageAppointmentController::class, 'pending'])->name('status.pending');
+    Route::get('/status/approved', [ManageAppointmentController::class, 'approved'])->name('status.approved');
+    Route::get('/status/completed', [ManageAppointmentController::class, 'completed'])->name('status.completed');
+    Route::get('/status/cancelled', [ManageAppointmentController::class, 'cancelled'])->name('status.cancelled');
+
+
 
     //MYPATIENTS APPOINTMENT
     Route::get('dentist/appointment', [PatientsAppointmentController::class, 'index'])->name('dentist_app.index');
+
 
     //MANAGE APPOINTMENT ROUTE
     Route::get('admin/appointments', [ManageAppointmentController::class, 'index'])->name('manage_app.index');
