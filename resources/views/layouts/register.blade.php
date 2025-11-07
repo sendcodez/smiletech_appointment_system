@@ -334,6 +334,363 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Rheumatic Fever</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="rheumatic" id="rheumaticYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="rheumaticYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="rheumatic" id="rheumaticNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="rheumaticNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Excessive Bleeding</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="bleeding" id="bleedingYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="bleedingYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="bleeding" id="bleedingNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="bleedingNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Cardiac Pacemaker</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="cardiac" id="cardiacYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="cardiacYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="cardiac" id="cardiacNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="cardiacNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Epilepsy</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="epilepsy" id="epilepsyYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="epilepsyYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="epilepsy" id="epilepsyNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="epilepsyNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Stroke</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="stroke" id="strokeYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="strokeYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="stroke" id="strokeNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="strokeNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Stomach or digestive condition</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="stomach" id="stomachYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="stomachYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="stomach" id="stomachNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="stomachNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Asthma</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="asthma" id="asthmaYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="asthmaYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="asthma" id="asthmaNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="asthmaNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Cancer</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="cancer" id="cancerYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="cancerYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="cancer" id="cancerNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="cancerNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Hepatitis or other liver disease</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="hepatitis" id="hepatitisYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="hepatitisYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="hepatitis" id="hepatitisNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="hepatitisNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Diabetes</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="diabetes" id="diabetesYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="diabetesYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="diabetes" id="diabetesNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="diabetesNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Tuberculosis</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="tuberculosis" id="tuberculosisYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="tuberculosisYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="tuberculosis" id="tuberculosisNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="tuberculosisNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Contact with blood-borne viruses</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="virus" id="virusYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="virusYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="virus" id="virusNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="virusNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Heart Disorder/Complaint</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="heart" id="heartYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="heartYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="heart" id="heartNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="heartNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Thyroid Disease</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="thyroid" id="thyroidYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="thyroidYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="thyroid" id="thyroidNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="thyroidNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Bronchitis, Emphysema or other lung disease</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="bronchitis" id="bronchitisYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="bronchitisYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="bronchitis" id="bronchitisNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="bronchitisNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Bone disease, including osteoporosis</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="bone" id="boneYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="boneYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="bone" id="boneNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="boneNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Nervous or psychiatric condition</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="nervous" id="nervousYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="nervousYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="nervous" id="nervousNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="nervousNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Anaemia, Leukemia or other blood disease</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="anaemia" id="anaemiaYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="anaemiaYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="anaemia" id="anaemiaNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="anaemiaNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Radiation Theraphy</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="radiation" id="radiationYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="radiationYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="radiation" id="radiationNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="radiationNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">High or low blood pressure</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="highblood" id="highbloodYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="highbloodYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="highblood" id="highbloodNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="highbloodNo">No</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label d-block">Any other Condition</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="any" id="anyYes" value="yes"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="anyYes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="any" id="anyNo" value="no"
+                                                            required>
+                                                        <label class="form-check-label" for="anyNo">No</label>
+                                                    </div>
+                                                </div>
+
 
                                         </div>
 
