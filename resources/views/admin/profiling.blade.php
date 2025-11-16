@@ -10,407 +10,173 @@
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
                         <h4>Patients Information</h4>
-
                     </div>
                 </div>
-
             </div>
-            <!-- row -->
 
+            <!-- Alert Messages -->
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            <!-- Patient Cards View -->
             <div class="row">
-
                 <div class="col-12">
-
                     <div class="card">
-                        <div class="card-header">
-                            <button type="button" class="btn btn-success float-right" data-bs-toggle="modal"
-                                data-bs-target="#addUserModal"> ADD PATIENT
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Patient Records</h4>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#addUserModal">
+                                <i class="fa fa-plus"></i> ADD PATIENT
                             </button>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="example3" class="display" style="min-width: 845px">
-                                    <thead>
-                                        <tr>
+                            <div class="row">
+                                @forelse($patients as $patient)
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+                                        <div class="card patient-card h-100 shadow-sm">
+                                            <div class="card-body">
+                                                <div class="text-center mb-3">
+                                                    <!--
+                                                                                                                                                                                    <div class="avatar-circle mx-auto mb-3">
+                                                                                                                                                                                        <span
+                                                                                                                                                                                            class="initials">{{ strtoupper(substr($patient->firstname, 0, 1) . substr($patient->lastname, 0, 1)) }}</span>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                -->
+                                                    <h5 class="card-title mb-1 bold" style="text-transform: uppercase;">
+                                                        {{ $patient->firstname }}
+                                                        {{ $patient->lastname }}</h5>
+                                                    <p class="text-muted small mb-0">{{ $patient->username ?? 'N/A' }}</p>
+                                                </div>
 
-                                            <th>FULL NAME</th>
-                                            <th>BIRTHDAY</th>
-                                            <th>AGE</th>
-                                            <th>SEX</th>
-                                            <th>CONTACT NUMBER</th>
-                                            <th>ADDRESS</th>
-                                            <th>OCCUPATION</th>
-                                            <th>ACTION</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($patients as $patient)
-                                            <tr>
+                                                <div class="patient-info">
 
-                                                <td>{{ $patient->firstname }} {{ $patient->middlename }}
-                                                    {{ $patient->firstnamelastname }}</td>
-                                                <td>{{ $patient->birthday }} </td>
-                                                <td>{{ $patient->age }}</td>
-                                                <td>{{ ucfirst($patient->sex) }}</td>
-                                                <td>{{ $patient->contact_number }}</td>
-                                                <td>{{ $patient->address }}</td>
-                                                <td>{{ $patient->occupation }}</td>
-                                                <td style="text-align: center">
-                                                    <div class="dropdown ml-auto text-right">
-                                                        <div class="btn-link text-center" data-toggle="dropdown">
-                                                            <svg width="24px" height="24px" viewBox="0 0 24 24"
-                                                                version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none"
-                                                                    fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <circle fill="#000000" cx="5" cy="12"
-                                                                        r="2"></circle>
-                                                                    <circle fill="#000000" cx="12" cy="12"
-                                                                        r="2"></circle>
-                                                                    <circle fill="#000000" cx="19" cy="12"
-                                                                        r="2"></circle>
-                                                                </g>
-                                                            </svg>
-                                                        </div>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-
-                                                            <button type="button" class="dropdown-item"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#editModal{{ $patient->id }}">
-                                                                <i class="dw dw-edit2"></i>Edit
-                                                            </button>
-                                                            <form action="{{ route('patients.destroy', $patient->id) }}"
-                                                                method="POST" style="display: inline;"
-                                                                id="deleteForm{{ $patient->id }}">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="button" class="dropdown-item delete-btn">
-                                                                    <i class="dw dw-trash"></i>Delete
-                                                                </button>
-                                                            </form>
-                                                        </div>
+                                                    <div class="info-item">
+                                                        <i class="fa fa-phone text-success"></i>
+                                                        <span><strong>Contact:</strong> {{ $patient->number }}</span>
                                                     </div>
-                                                </td>
-                                            </tr>
-
-                                            <div class="modal fade" id="editModal{{ $patient->id }}" tabindex="-1"
-                                                aria-labelledby="addUserModalLabel{{ $patient->id }}" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="text-center">Patient Informations</h3>
-                                                            <button type="button" id="close" class="close"
-                                                                data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form id="multiStepForm" method="POST"
-                                                                action="{{ route('patients.update', $patient->id) }}"
-                                                                enctype="multipart/form-data">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <label>First Name</label>
-                                                                        <div class="form-group">
-                                                                            <input type="text" name="firstname"
-                                                                                class="form-control"
-                                                                                value="{{ $patient->firstname }}" required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label>Middle Name</label>
-                                                                        <div class="form-group">
-                                                                            <input type="text" name="middlename"
-                                                                                value="{{ $patient->middlename }}"
-                                                                                class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label>Last Name</label>
-                                                                        <div class="form-group">
-                                                                            <input type="text" name="lastname"
-                                                                                value="{{ $patient->lastname }}"
-                                                                                class="form-control" required>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <label>Birthday</label>
-                                                                        <div class="form-group">
-                                                                            <input type="date" id="edit_birthday"
-                                                                                name="birthday"
-                                                                                value="{{ $patient->birthday }}"
-                                                                                class="form-control" required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label>Age</label>
-                                                                        <div class="form-group">
-                                                                            <input type="number" id="edit_age"
-                                                                                name="age"
-                                                                                value="{{ $patient->age }}"
-                                                                                class="form-control"
-                                                                                style="background-color: rgb(202, 197, 197)"
-                                                                                required readonly>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-4">
-                                                                        <label>Sex</label>
-                                                                        <div class="form-group">
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input"
-                                                                                    type="radio" name="sex"
-                                                                                    id="female" value="female"
-                                                                                    {{ $patient->sex == 'female' ? 'checked' : '' }}>
-                                                                                <label class="form-check-label"
-                                                                                    for="female">
-                                                                                    Female
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input"
-                                                                                    type="radio" name="sex"
-                                                                                    id="male" value="male"
-                                                                                    {{ $patient->sex == 'male' ? 'checked' : '' }}>
-                                                                                <label class="form-check-label"
-                                                                                    for="male">
-                                                                                    Male
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <label>Contact Number</label>
-                                                                        <div class="form-group">
-                                                                            <input type="text" name="contact_number"
-                                                                                value="{{ $patient->contact_number }}"
-                                                                                class="form-control" required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label>Occupation</label>
-                                                                        <div class="form-group">
-                                                                            <input type="text" name="occupation"
-                                                                                value="{{ $patient->occupation }}"
-                                                                                class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label>Address</label>
-                                                                        <div class="form-group">
-                                                                            <input type="text" name="address"
-                                                                                value="{{ $patient->address }}"
-                                                                                class="form-control" required>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="modal-footer">
-                                                                    <button type="reset" class="btn btn-danger">
-                                                                        <i class="bx bx-x d-block d-sm-none"></i>
-                                                                        <span class="d-none d-sm-block">Reset</span>
-                                                                    </button>
-                                                                    <button type="submit" class="btn btn-primary ml-1"
-                                                                        data-bs-dismiss="modal">
-                                                                        <i class="bx bx-check d-block d-sm-none"></i>
-                                                                        <span class="d-none d-sm-block">Submit</span>
-                                                                    </button>
-                                                                </div>
-                                                        </div>
-                                                        </form>
+                                                    <div class="info-item">
+                                                        <i class="fa fa-map-marker text-danger"></i>
+                                                        <span><strong>Address:</strong>
+                                                            {{ Str::limit($patient->address, 30) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @empty
-                                            <tr>
-                                                <td colspan="8" style="text-align: center">No data available</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                            <div class="card-footer bg-light">
+                                                <div class="btn-group w-100" role="group">
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#viewModal{{ $patient->id }}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-warning"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editModal{{ $patient->id }}">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                                        onclick="confirmDelete({{ $patient->id }})">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                </div>
+                                                <form id="deleteForm{{ $patient->id }}"
+                                                    action="{{ route('patients.destroy', $patient->id) }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Include modals for each patient -->
+                                    @include('modal.view_patient', ['patient' => $patient])
+                                    @include('modal.edit_patient', ['patient' => $patient])
+
+                                @empty
+                                    <div class="col-12">
+                                        <div class="alert alert-info text-center">
+                                            <i class="fa fa-info-circle fa-3x mb-3"></i>
+                                            <h4>No Patients Found</h4>
+                                            <p>Start by adding your first patient record.</p>
+                                        </div>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h3 class="text-center">Patient Informations</h3>
-                                <button type="button" id="close" class="close" data-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="multiStepForm" method="POST" action="{{ route('patients.store') }}"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label>First Name</label>
-                                            <div class="form-group">
-                                                <input type="text" name="firstname" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label>Middle Name</label>
-                                            <div class="form-group">
-                                                <input type="text" name="middlename" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label>Last Name</label>
-                                            <div class="form-group">
-                                                <input type="text" name="lastname" class="form-control" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label>Birthday</label>
-                                            <div class="form-group">
-                                                <input type="date" id="birthday" name="birthday"
-                                                    class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label>Age</label>
-                                            <div class="form-group">
-                                                <input type="number" id="age" name="age" class="form-control"
-                                                    style="background-color: rgb(202, 197, 197)" required readonly>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <label>Sex</label>
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="sex" id="female" value="female">
-                                                    <label class="form-check-label" for="female">
-                                                        Female
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="sex" id="male" value="male">
-                                                    <label class="form-check-label" for="male">
-                                                        Male
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label>Contact Number</label>
-                                            <div class="form-group">
-                                                <input type="text" name="contact_number" class="form-control"
-                                                    required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label>Occupation</label>
-                                            <div class="form-group">
-                                                <input type="text" name="occupation" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label>Address</label>
-                                            <div class="form-group">
-                                                <input type="text" name="address" class="form-control" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="reset" class="btn btn-danger">
-                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Reset</span>
-                                        </button>
-                                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Submit</span>
-                                        </button>
-                                    </div>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- Add Patient Modal (keep your existing add modal) -->
+            <!-- ... existing add modal code ... -->
         </div>
     </div>
+
+
+    @include('modal.add_patient', ['patient' => $patient])
+
+
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+
+
     <script>
         $(document).ready(function() {
-            $('.modal .close').click(function() {
+            $('#close').click(function() {
                 $(this).closest('.modal').modal('hide');
             });
         });
 
-        document.getElementById('birthday').addEventListener('change', function() {
-            var dob = new Date(this.value);
-            var today = new Date();
-            var age = today.getFullYear() - dob.getFullYear();
-            var monthDiff = today.getMonth() - dob.getMonth();
-
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                age--;
-            }
-
-            document.getElementById('age').value = age;
-        });
-
-        document.getElementById('edit_birthday').addEventListener('change', function() {
-            var dob = new Date(this.value);
-            var today = new Date();
-            var age = today.getFullYear() - dob.getFullYear();
-            var monthDiff = today.getMonth() - dob.getMonth();
-
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                age--;
-            }
-
-            document.getElementById('edit_age').value = age;
-        });
-
-
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default form submission behavior
-
-                const form = this.closest('form'); // Find the closest form element
-
-                // Display SweetAlert confirmation dialog
+        // Delete confirmation function
+        function confirmDelete(patientId) {
+            // Using SweetAlert2 if available
+            if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: 'You won\'t be able to revert this!',
+                    text: "You won't be able to revert this!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // If confirmed, submit the form
-                        form.submit();
+                        document.getElementById('deleteForm' + patientId).submit();
                     }
                 });
-            });
+            } else {
+                // Fallback to native confirm
+                if (confirm('Are you sure you want to delete this patient? This action cannot be undone.')) {
+                    document.getElementById('deleteForm' + patientId).submit();
+                }
+            }
+        }
+        // Form validation
+        document.getElementById('addPatientForm').addEventListener('submit', function(e) {
+            const password = document.querySelector('input[name="password"]').value;
+            const confirmPassword = document.querySelector('input[name="password_confirmation"]').value;
+
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return false;
+            }
         });
     </script>
 @endsection

@@ -19,7 +19,27 @@
     <!-- Template Stylesheet -->
     <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
 </head>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 <body class="h-100">
     <!-- Topbar Start -->
     <div class="container-fluid bg-light ps-5 pe-0 d-none d-lg-block">
@@ -159,16 +179,16 @@
                                                             reactions to local or general anaesthesia?</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="anaesthesia" id="anaesthesiaYes" value="yes"
+                                                            name="abnormal" id="abnormalYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="anaesthesiaYes">Yes</label>
+                                                            for="abnormalYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="anaesthesia" id="anaesthesiaNo" value="no"
+                                                            name="abnormal" id="abnormalNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="anaesthesiaNo">No</label>
+                                                        <label class="form-check-label" for="abnormalNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -192,14 +212,14 @@
                                                 <label class="form-label d-block">Are you
                                                         pregnant?</label>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="smoke"
-                                                        id="smokeYes" value="yes" required>
-                                                    <label class="form-check-label" for="smokeYes">Yes</label>
+                                                    <input class="form-check-input" type="radio" name="pregnant"
+                                                        id="pregnantYes" value="yes" required>
+                                                    <label class="form-check-label" for="pregnantYes">Yes</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="smoke"
-                                                        id="smokeNo" value="no" required>
-                                                    <label class="form-check-label" for="smokeNo">No</label>
+                                                    <input class="form-check-input" type="radio" name="pregnant"
+                                                        id="pregnantNo" value="no" required>
+                                                    <label class="form-check-label" for="pregnantNo">No</label>
                                                 </div>
                                             </div>
 
@@ -207,14 +227,14 @@
                                                 <label class="form-label d-block">Are you being treated by a
                                                         doctor at present?</label>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="doctor"
-                                                        id="doctorYes" value="yes" required>
-                                                    <label class="form-check-label" for="doctorYes">Yes</label>
+                                                    <input class="form-check-input" type="radio" name="treated"
+                                                        id="treatedYes" value="yes" required>
+                                                    <label class="form-check-label" for="treatedYes">Yes</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="doctor"
-                                                        id="doctorNo" value="no" required>
-                                                    <label class="form-check-label" for="doctorNo">No</label>
+                                                    <input class="form-check-input" type="radio" name="treated"
+                                                        id="treatedNo" value="no" required>
+                                                    <label class="form-check-label" for="treatedNo">No</label>
                                                 </div>
                                             </div>
 
@@ -304,16 +324,16 @@
                                                     <label class="form-label d-block">Kidney Disease</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="kidney" id="kidneyYes" value="yes"
+                                                            name="kidney_disease" id="kidney_diseaseYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="kidneyYes">Yes</label>
+                                                            for="kidney_diseaseYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="kidney" id="kidneyNo" value="no"
+                                                            name="kidney_disease" id="kidney_diseaseNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="kidneyNo">No</label>
+                                                        <label class="form-check-label" for="kidney_diseaseNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -321,16 +341,16 @@
                                                     <label class="form-label d-block">Prosthetic implant eg artificial hip</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="prosthetic" id="prostheticYes" value="yes"
+                                                            name="prosthetic_implant" id="prosthetic_implantYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="prostheticYes">Yes</label>
+                                                            for="prosthetic_implantYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="prosthetic" id="prostheticNo" value="no"
+                                                            name="prosthetic_implant" id="prosthetic_implantNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="prostheticNo">No</label>
+                                                        <label class="form-check-label" for="prosthetic_implantNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -355,16 +375,16 @@
                                                     <label class="form-label d-block">Excessive Bleeding</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="bleeding" id="bleedingYes" value="yes"
+                                                            name="excessive_bleeding" id="excessive_bleedingYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="bleedingYes">Yes</label>
+                                                            for="excessive_bleedingYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="bleeding" id="bleedingNo" value="no"
+                                                            name="excessive_bleeding" id="excessive_bleedingNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="bleedingNo">No</label>
+                                                        <label class="form-check-label" for="excessive_bleedingNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -372,16 +392,16 @@
                                                     <label class="form-label d-block">Cardiac Pacemaker</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="cardiac" id="cardiacYes" value="yes"
+                                                            name="cardiac_pacemaker" id="cardiac_pacemakerYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="cardiacYes">Yes</label>
+                                                            for="cardiac_pacemakerYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="cardiac" id="cardiacNo" value="no"
+                                                            name="cardiac_pacemaker" id="cardiac_pacemakerNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="cardiacNo">No</label>
+                                                        <label class="form-check-label" for="cardiac_pacemakerNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -423,16 +443,16 @@
                                                     <label class="form-label d-block">Stomach or digestive condition</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="stomach" id="stomachYes" value="yes"
+                                                            name="stomach_condition" id="stomach_conditionYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="stomachYes">Yes</label>
+                                                            for="stomach_conditionYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="stomach" id="stomachNo" value="no"
+                                                            name="stomach_condition" id="stomach_conditionNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="stomachNo">No</label>
+                                                        <label class="form-check-label" for="stomach_conditionNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -525,16 +545,16 @@
                                                     <label class="form-label d-block">Contact with blood-borne viruses</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="virus" id="virusYes" value="yes"
+                                                            name="blood_borne" id="blood_borneYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="virusYes">Yes</label>
+                                                            for="blood_borneYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="virus" id="virusNo" value="no"
+                                                            name="blood_borne" id="blood_borneNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="virusNo">No</label>
+                                                        <label class="form-check-label" for="blood_borneNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -542,16 +562,16 @@
                                                     <label class="form-label d-block">Heart Disorder/Complaint</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="heart" id="heartYes" value="yes"
+                                                            name="heart_disorder" id="heart_disorderYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="heartYes">Yes</label>
+                                                            for="heart_disorderYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="heart" id="heartNo" value="no"
+                                                            name="heart_disorder" id="heart_disorderNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="heartNo">No</label>
+                                                        <label class="form-check-label" for="heart_disorderNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -559,16 +579,16 @@
                                                     <label class="form-label d-block">Thyroid Disease</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="thyroid" id="thyroidYes" value="yes"
+                                                            name="thyroid_disease" id="thyroid_diseaseYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="thyroidYes">Yes</label>
+                                                            for="thyroid_diseaseYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="thyroid" id="thyroidNo" value="no"
+                                                            name="thyroid_disease" id="thyroid_diseaseNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="thyroidNo">No</label>
+                                                        <label class="form-check-label" for="thyroid_diseaseNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -593,16 +613,16 @@
                                                     <label class="form-label d-block">Bone disease, including osteoporosis</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="bone" id="boneYes" value="yes"
+                                                            name="bone_disease" id="bone_diseaseYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="boneYes">Yes</label>
+                                                            for="bone_diseaseYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="bone" id="boneNo" value="no"
+                                                            name="bone_disease" id="bone_diseaseNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="boneNo">No</label>
+                                                        <label class="form-check-label" for="bone_diseaseNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -661,16 +681,16 @@
                                                     <label class="form-label d-block">High or low blood pressure</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="highblood" id="highbloodYes" value="yes"
+                                                            name="high_blood" id="high_bloodYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="highbloodYes">Yes</label>
+                                                            for="high_bloodYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="highblood" id="highbloodNo" value="no"
+                                                            name="high_blood" id="high_bloodNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="highbloodNo">No</label>
+                                                        <label class="form-check-label" for="high_bloodNo">No</label>
                                                     </div>
                                                 </div>
 
@@ -678,16 +698,16 @@
                                                     <label class="form-label d-block">Any other Condition</label>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="any" id="anyYes" value="yes"
+                                                            name="other_condition" id="other_conditionYes" value="yes"
                                                             required>
                                                         <label class="form-check-label"
-                                                            for="anyYes">Yes</label>
+                                                            for="other_conditionYes">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="any" id="anyNo" value="no"
+                                                            name="other_condition" id="other_conditionNo" value="no"
                                                             required>
-                                                        <label class="form-check-label" for="anyNo">No</label>
+                                                        <label class="form-check-label" for="other_conditionNo">No</label>
                                                     </div>
                                                 </div>
 

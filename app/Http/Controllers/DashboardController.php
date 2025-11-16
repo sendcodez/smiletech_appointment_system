@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Appointment;
 use App\Models\Patient;
+use App\Models\User;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,13 +20,14 @@ class DashboardController extends Controller
         $totalAppointments = Appointment::count();
 
         $totalPatients = Patient::count();
+        $totalUsers = User::count();
 
         $completedAppointments = Appointment::where('status', 3)->count();
         $services = Service::all();
         $appointments = Appointment::all();
 
 
-        return view('admin.dashboard', compact('totalAppointments', 'totalPatients', 'completedAppointments','services','appointments'));
+        return view('admin.dashboard', compact('totalAppointments', 'totalPatients', 'completedAppointments','services','appointments','totalUsers'));
     }
 
     public function chartData()

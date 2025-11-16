@@ -82,9 +82,9 @@
                                         </svg>
                                     </span>
                                     <div class="media-body">
-                                        <h3 class="mb-0 text-black"><span class="counter ml-0">{{ $totalPatients }}</span>
+                                        <h3 class="mb-0 text-black"><span class="counter ml-0">{{ $totalUsers }}</span>
                                         </h3>
-                                        <p class="mb-0">Total Profiled Patients</p>
+                                        <p class="mb-0">Total Users</p>
                                     </div>
                                 </div>
                             </div>

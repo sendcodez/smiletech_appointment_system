@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
+
 
 class User extends Authenticatable
 {
@@ -27,7 +29,15 @@ class User extends Authenticatable
         'usertype',
         'status',
         'username',
-        'attachment'
+        //'attachment',
+        'address',
+        'number',
+        'birthday',
+        'contact_person',
+        'contact_person_number'
+
+
+
     ];
 
     /**
@@ -57,4 +67,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Appointment::class);
     }
+
+    public function medicalHistory()
+{
+    return $this->hasOne(MedicalHistories::class, 'user_id');
+}
+
+public function medicalConditions()
+{
+    return $this->hasOne(MedicalConditions::class, 'user_id');
+}
+
+public function getAgeAttribute()
+{
+    return Carbon::parse($this->birthday)->age;
+}
+
 }

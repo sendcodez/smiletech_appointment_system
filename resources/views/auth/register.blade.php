@@ -59,13 +59,6 @@
         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
     @endsection
 
-    @section('attachment')
-        <x-input-label for="attachment" :value="__('Medical History')" />
-        <x-text-input id="attachment" class="form-control" type="file" name="attachment" required autofocus
-            accept=".pdf,.doc,.docx,.jpg,.png,.jpeg" />
-        <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
-    @endsection
-
     @section('birthday')
         <x-input-label for="birthday" :value="__('Birthdate')" />
         <x-text-input id="birthday" class="form-control" type="date" name="birthday" :value="old('birthday')" required

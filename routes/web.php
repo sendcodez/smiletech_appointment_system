@@ -120,6 +120,8 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/save_patients', [PatientProfileController::class, 'store'])->name('patients.store');
     Route::delete('/patient/{id}', [PatientProfileController::class, 'destroy'])->name('patients.destroy');
     Route::put('admin/patients{id}', [PatientProfileController::class, 'update'])->name('patients.update');
+    Route::put('/patients/{id}', [UserController::class, 'update'])->name('patients.update');
+  
 
     //CUSTOMER SUPPORT ROUTE
     Route::get('admin/customer-support', [CustomerSupportController::class, 'index'])->name('support.index');
