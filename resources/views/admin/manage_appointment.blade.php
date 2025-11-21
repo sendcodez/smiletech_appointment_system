@@ -39,7 +39,14 @@
                                         @forelse($manage_app as $app)
                                             <tr>
                                                 <td>{{ $app->date }}</td>
-                                                <td>{{ $app->user->firstname }} {{ $app->user->lastname }}</td>
+                                                <td>
+                                                    @if ($app->user)
+                                                        {{ $app->user->firstname }} {{ $app->user->lastname }}
+                                                    @else
+                                                        <span class="text-danger">No user</span>
+                                                    @endif
+                                                </td>
+
                                                 <td>
                                                     @if ($app->services->isNotEmpty())
                                                         {{ $app->services->pluck('name')->implode(', ') }}
