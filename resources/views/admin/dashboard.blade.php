@@ -144,8 +144,15 @@
                                     @forelse ($appointments as $key => $appointment)
                                         <tr>
                                             <td>{{ $appointment->date }}</td>
-                                            <td>{{ ucfirst($appointment->user->firstname) }}
-                                                {{ ucfirst($appointment->user->lastname) }}</td>
+                                            <td>
+                                                @if ($appointment->user)
+                                                    {{ ucfirst($appointment->user->firstname) }}
+                                                    {{ ucfirst($appointment->user->lastname) }}
+                                                @else
+                                                    <span class="text-danger">No user</span>
+                                                @endif
+                                            </td>
+
                                             <td>
                                                 @if ($appointment->services && $appointment->services->count() > 0)
                                                     {{ $appointment->services->pluck('name')->join(', ') }}
