@@ -36,8 +36,14 @@
                                         <tr>
                                             @forelse($patient_app as $app)
                                                 <td>{{ $app->date }}</td>
-                                                <td>{{ $app->user->firstname }} {{ $app->user->lastname }}</td>
-                                                <td>{{ $app->service ? $app->service->name : "Not available" }}</td>
+                                                <td>
+                                                    @if ($app->user)
+                                                        {{ $app->user->firstname }} {{ $app->user->lastname }}
+                                                    @else
+                                                        <span class="text-danger">No user</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $app->service ? $app->service->name : 'Not available' }}</td>
                                                 <td>{{ $app->day }}</td>
                                                 <td>{{ ucfirst($app->time) }}</td>
                                                 <td>{{ $app->reference_number }}</td>
@@ -71,9 +77,10 @@
                                                         </div>
                                                         <div class="dropdown-menu dropdown-menu-right">
 
-                                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                            <button type="button" class="dropdown-item"
+                                                                data-bs-toggle="modal"
                                                                 data-bs-target="#resultsModal{{ $app->id }}">
-                                                                     Add Result
+                                                                Add Result
                                                             </button>
                                                             @if ($app->status == 1 || $app->status == 2)
                                                                 <form action="{{ route('appointments.cancel', $app->id) }}"
@@ -101,74 +108,76 @@
                                                     </div>
                                                 </td>
                                         </tr>
-                                        
-                <div class="modal fade" id="resultsModal{{ $app->id }}" tabindex="-1" aria-labelledby="addUserModalLabel{{ $app->id }}"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h3 class="text-center">Treatment Information</h3>
-                                <button type="button" id="close" class="close" data-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="multiStepForm" method="POST" action="{{route('results.store')}}"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div id="step1">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label>Patient Name</label>
-                                                <div class="form-group">
-                                                    <input type="hidden" name="user_id" value="{{ $app->user_id }}"
-                                                        class="form-control" readonly>
-                                                    <input type="text" style="background-color: rgb(202, 197, 197)"
-                                                        name="fullname" value="{{ $app->user->firstname }} {{ $app->user->middlename}} {{ $app->user->lastname}}"
-                                                        class="form-control" readonly>
-                                                </div>
-                                                <label>Date</label>
-                                                <div class="form-group">
-                                                    <input type="date"
-                                                        name="date" 
-                                                        class="form-control">
-                                                </div>
-                                                <label>Time</label>
-                                                <div class="form-group">
-                                                    <input type="time"
-                                                        name="time" 
-                                                        class="form-control">
-                                                </div>
-                                                <label>Tooth Number</label>
-                                                <div class="form-group">
-                                                    <input type="number"
-                                                        name="number"
-                                                        class="form-control" >
-                                                </div>
-                                                <label>Description</label>
-                                                <div class="form-group">
-                                                    <textarea class="form-control" name="description"></textarea>
+
+                                        <div class="modal fade" id="resultsModal{{ $app->id }}" tabindex="-1"
+                                            aria-labelledby="addUserModalLabel{{ $app->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="text-center">Treatment Information</h3>
+                                                        <button type="button" id="close" class="close"
+                                                            data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="multiStepForm" method="POST"
+                                                            action="{{ route('results.store') }}"
+                                                            enctype="multipart/form-data">
+                                                            @csrf
+                                                            <div id="step1">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label>Patient Name</label>
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" name="user_id"
+                                                                                value="{{ $app->user_id }}"
+                                                                                class="form-control" readonly>
+                                                                            <input type="text"
+                                                                                style="background-color: rgb(202, 197, 197)"
+                                                                                name="fullname"
+                                                                                value="{{ $app->user->firstname }} {{ $app->user->middlename }} {{ $app->user->lastname }}"
+                                                                                class="form-control" readonly>
+                                                                        </div>
+                                                                        <label>Date</label>
+                                                                        <div class="form-group">
+                                                                            <input type="date" name="date"
+                                                                                class="form-control">
+                                                                        </div>
+                                                                        <label>Time</label>
+                                                                        <div class="form-group">
+                                                                            <input type="time" name="time"
+                                                                                class="form-control">
+                                                                        </div>
+                                                                        <label>Tooth Number</label>
+                                                                        <div class="form-group">
+                                                                            <input type="number" name="number"
+                                                                                class="form-control">
+                                                                        </div>
+                                                                        <label>Description</label>
+                                                                        <div class="form-group">
+                                                                            <textarea class="form-control" name="description"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="reset" class="btn btn-danger">
+                                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Reset</span>
+                                                                </button>
+                                                                <button type="submit" class="btn btn-primary ml-1"
+                                                                    data-bs-dismiss="modal">
+                                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Submit</span>
+                                                                </button>
+                                                            </div>
+                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="reset" class="btn btn-danger">
-                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Reset</span>
-                                        </button>
-                                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Submit</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
                                     @empty
                                         <tr>
                                             <td colspan="7" style="text-align: center">No data available</td>
@@ -190,7 +199,6 @@
 
 
     <script>
-
         document.querySelectorAll('.cancel-btn').forEach(button => {
             button.addEventListener('click', function(event) {
                 event.preventDefault(); // Prevent default form submission behavior
@@ -240,7 +248,7 @@
                 });
             });
         });
-        
+
         $(document).ready(function() {
             $('.modal .close').click(function() {
                 $(this).closest('.modal').modal('hide');
