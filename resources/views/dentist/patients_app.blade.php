@@ -136,8 +136,9 @@
                                                                             <input type="text"
                                                                                 style="background-color: rgb(202, 197, 197)"
                                                                                 name="fullname"
-                                                                                value="{{ $app->user->firstname }} {{ $app->user->middlename }} {{ $app->user->lastname }}"
+                                                                                value="{{ optional($app->user)->firstname }} {{ optional($app->user)->middlename }} {{ optional($app->user)->lastname }}"
                                                                                 class="form-control" readonly>
+
                                                                         </div>
                                                                         <label>Date</label>
                                                                         <div class="form-group">
