@@ -33,7 +33,7 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                           
+
                                             <th>IMAGE</th>
                                             <th>USER ID</th>
                                             <th>NAME</th>
@@ -46,10 +46,10 @@
                                     <tbody>
                                         @forelse($dentists as $dentist)
                                             <tr>
-                                              
+
                                                 <td>
                                                     <img src="{{ asset('dentist_image/' . $dentist->image) }}"
-                                                        alt="QR Code" style="max-width: 100px;">
+                                                        alt="Doctor Image" style="max-width: 100px;">
 
                                                 </td>
                                                 <td>{{ $dentist->user_id }}</td>
@@ -97,12 +97,12 @@
                                                                 </button>
                                                             </form>
                                                             <!--
-                                                            <button type="button" class="dropdown-item"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#editUserModal{{ $dentist->id }}">
-                                                                <i class="dw dw-edit2"></i>Edit
-                                                            </button>
-                                                            -->
+                                                                                    <button type="button" class="dropdown-item"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#editUserModal{{ $dentist->id }}">
+                                                                                        <i class="dw dw-edit2"></i>Edit
+                                                                                    </button>
+                                                                                    -->
                                                             <form action="{{ route('dentist.destroy', $dentist->id) }}"
                                                                 method="POST" style="display: inline;"
                                                                 id="deleteForm{{ $dentist->id }}">
@@ -121,122 +121,133 @@
                                                 <td colspan="10" style="text-align: center">No data available</td>
                                             </tr>
                                         @endforelse
-                                        
+
                                     </tbody>
                                 </table>
-                          
-                                @if($dentists->isEmpty())
-                                <tr>
-                                    <td colspan="10" style="text-align: center">No data available</td>
-                                </tr>
-                            @else
 
-                                <div class="modal fade" id="editUserModal{{ $dentist->id }}" tabindex="-1"
-                                    aria-labelledby="editUserModalLabel{{ $dentist->id }}" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="text-center">Dentist Information</h3>
-                                                <button type="button" id="close" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body  modal-lg">
-                                                <form id="multiStepForm" method="POST"
-                                                    action="{{ route('dentist.update', $dentist->id) }}" enctype="multipart/form-data">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <div id="step1">
+                                @if ($dentists->isEmpty())
+                                    <tr>
+                                        <td colspan="10" style="text-align: center">No data available</td>
+                                    </tr>
+                                @else
+                                    <div class="modal fade" id="editUserModal{{ $dentist->id }}" tabindex="-1"
+                                        aria-labelledby="editUserModalLabel{{ $dentist->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="text-center">Dentist Information</h3>
+                                                    <button type="button" id="close" class="close"
+                                                        data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body  modal-lg">
+                                                    <form id="multiStepForm" method="POST"
+                                                        action="{{ route('dentist.update', $dentist->id) }}"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div id="step1">
 
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <label>First Name</label>
-                                                                <div class="form-group">
-                                                                    <input type="text" name="firstname"
-                                                                        class="form-control"  value="{{ $dentist->firstname }}" required>
-                                                                </div>
-                                                                <label>Middle Name</label>
-                                                                <div class="form-group">
-                                                                    <input type="text" name="middlename"
-                                                                    value="{{ $dentist->middlename }}"   class="form-control">
-                                                                </div>
-                                                                <label>Last Name</label>
-                                                                <div class="form-group">
-                                                                    <input type="text" name="lastname"
-                                                                        class="form-control"  value="{{ $dentist->lastname }}" required>
-                                                                </div>
-                                                                <label>Username</label>
-                                                                <div class="form-group">
-                                                                    <input type="text" name="lastname"
-                                                                        class="form-control"  value="{{ $dentist->username }}" required>
-                                                                </div>
-                                                                <label>Contact Number</label>
-                                                                <div class="form-group">
-                                                                    <input type="text" name="contact_number"
-                                                                        class="form-control"  value="{{ $dentist->contact_number }}" required>
-                                                                </div>
-                                                                <label>Current Image</label>
-                                                                <div class="form-group">
-                                                                    <img src="{{ asset('dentist_image/' . $dentist->image) }}"
-                                                                        class="existing-image" width="100" height="100"
-                                                                        alt="Current Image">
-                                                                </div>
-                                                            </div>
-                                                        
-
-
-                                                            <div class="col-md-6">
-                                                                <label>Address</label>
-                                                                <div class="form-group">
-                                                                    <input type="text" name="address"
-                                                                        class="form-control" value="{{ $dentist->contact_number }}" required>
-                                                                </div>
-                                                                <label>About</label>
-                                                                <div class="form-group">
-                                                                    <input type="text" name="about"
-                                                                        class="form-control" value="{{ $dentist->about }}" required>
-                                                                </div>
-                                                                <label>Email</label>
-                                                                <div class="form-group">
-                                                                    <input type="email" name="email"
-                                                                        class="form-control" value="{{ $dentist->email }}" required >
-                                                                </div>
-                                                                <label>Password</label>
-                                                                <div class="form-group">
-                                                                    <input type="password" name="password"
-                                                                        class="form-control" value="{{ $dentist->password }}" required>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label>First Name</label>
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="firstname"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->firstname }}" required>
+                                                                    </div>
+                                                                    <label>Middle Name</label>
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="middlename"
+                                                                            value="{{ $dentist->middlename }}"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                    <label>Last Name</label>
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="lastname"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->lastname }}" required>
+                                                                    </div>
+                                                                    <label>Username</label>
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="lastname"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->username }}" required>
+                                                                    </div>
+                                                                    <label>Contact Number</label>
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="contact_number"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->contact_number }}"
+                                                                            required>
+                                                                    </div>
+                                                                    <label>Current Image</label>
+                                                                    <div class="form-group">
+                                                                        <img src="{{ asset('dentist_image/' . $dentist->image) }}"
+                                                                            class="existing-image" width="100"
+                                                                            height="100" alt="Current Image">
+                                                                    </div>
                                                                 </div>
 
-                                                              
+
+
+                                                                <div class="col-md-6">
+                                                                    <label>Address</label>
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="address"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->contact_number }}"
+                                                                            required>
+                                                                    </div>
+                                                                    <label>About</label>
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="about"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->about }}" required>
+                                                                    </div>
+                                                                    <label>Email</label>
+                                                                    <div class="form-group">
+                                                                        <input type="email" name="email"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->email }}" required>
+                                                                    </div>
+                                                                    <label>Password</label>
+                                                                    <div class="form-group">
+                                                                        <input type="password" name="password"
+                                                                            class="form-control"
+                                                                            value="{{ $dentist->password }}" required>
+                                                                    </div>
+
+
                                                                     <label>Upload New Image</label>
                                                                     <div class="form-group">
-                                                                        <input type="file" name="image" class="form-control">
+                                                                        <input type="file" name="image"
+                                                                            class="form-control">
                                                                     </div>
-                                                            
 
+
+                                                                </div>
                                                             </div>
+
                                                         </div>
 
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="reset" class="btn btn-danger">
-                                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                                            <span class="d-none d-sm-block">Reset</span>
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary ml-1"
-                                                            data-bs-dismiss="modal">
-                                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                                            <span class="d-none d-sm-block">Submit</span>
-                                                        </button>
-                                                    </div>
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-danger">
+                                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">Reset</span>
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary ml-1"
+                                                                data-bs-dismiss="modal">
+                                                                <i class="bx bx-check d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">Submit</span>
+                                                            </button>
+                                                        </div>
+                                                </div>
+                                                </form>
                                             </div>
-                                            </form>
                                         </div>
                                     </div>
-                                </div>
-
                                 @endif
 
                             </div>

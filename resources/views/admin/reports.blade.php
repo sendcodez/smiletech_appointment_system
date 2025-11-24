@@ -106,7 +106,12 @@
                                                 <td>{{ $appointment->date }}</td>
                                                 <td>{{ ucfirst($appointment->user->firstname) }}
                                                     {{ ucfirst($appointment->user->lastname) }}</td>
-                                                <td>{{ $appointment->service ? $appointment->service->name : 'Not available' }}
+                                                <td>
+                                                    @if ($appointment->services->isNotEmpty())
+                                                        {{ $appointment->services->pluck('name')->join(', ') }}
+                                                    @else
+                                                        Not available
+                                                    @endif
                                                 </td>
 
                                                 <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
@@ -203,9 +208,9 @@
   </div>
 
   `;
-  document.querySelectorAll('.no-print').forEach(function(element) {
-        element.style.display = 'none';
-    });
+            document.querySelectorAll('.no-print').forEach(function(element) {
+                element.style.display = 'none';
+            });
             var totalAppointments = "{{ count($appointments) }}";
             var startDate = "{{ $startDate ?? '' }}";
             var endDate = "{{ $endDate ?? '' }}";
@@ -220,7 +225,9 @@
             printWindow.document.write('.header { display: flex; align-items: center; justify-content: space-between; }');
             printWindow.document.write('.logo { width: 20%; }');
             printWindow.document.write('.title { width: 80%; text-align: center; font-size: 1.5rem; }');
-            printWindow.document.write('.designation { text-align: left; font-family: Arial, sans-serif; font-weight: 100;font-size:13px;margin-top:-2%; }'); // Added designation class
+            printWindow.document.write(
+                '.designation { text-align: left; font-family: Arial, sans-serif; font-weight: 100;font-size:13px;margin-top:-2%; }'
+                ); // Added designation class
             printWindow.document.write('.address { width: 20%; text-align: right; }');
             printWindow.document.write('.display { border-collapse: collapse; width: 100%; }');
             printWindow.document.write('.display th, .display td { border: 1px solid #ddd; padding: 8px; }');

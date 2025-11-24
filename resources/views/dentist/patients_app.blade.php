@@ -43,7 +43,13 @@
                                                         <span class="text-danger">No user</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $app->service ? $app->service->name : 'Not available' }}</td>
+                                                <td>
+                                                    @if ($app->services->isNotEmpty())
+                                                        {{ $app->services->pluck('name')->join(', ') }}
+                                                    @else
+                                                        Not available
+                                                    @endif
+                                                </td>
                                                 <td>{{ $app->day }}</td>
                                                 <td>{{ ucfirst($app->time) }}</td>
                                                 <td>{{ $app->reference_number }}</td>

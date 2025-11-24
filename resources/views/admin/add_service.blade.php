@@ -58,7 +58,7 @@
                                                 </td>
                                                 <td>
                                                     <img src="{{ asset('service_image/' . $service->image) }}"
-                                                        alt="QR Code" style="max-width: 100px;">
+                                                        alt="Service Image" style="max-width: 100px;">
 
                                                 </td>
                                                 <td style="text-align: center">
@@ -122,7 +122,8 @@
 
                                             <!-- Edit Modal for each service -->
                                             <div class="modal fade" id="editServiceModal{{ $service->id }}" tabindex="-1"
-                                                aria-labelledby="editServiceModalLabel{{ $service->id }}" aria-hidden="true">
+                                                aria-labelledby="editServiceModalLabel{{ $service->id }}"
+                                                aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -133,7 +134,8 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form method="POST" action="{{ route('service.update', $service->id) }}"
+                                                            <form method="POST"
+                                                                action="{{ route('service.update', $service->id) }}"
                                                                 enctype="multipart/form-data">
                                                                 @csrf
                                                                 @method('PUT')
@@ -142,12 +144,14 @@
                                                                     <div class="col-md-12">
                                                                         <label>Service Name</label>
                                                                         <div class="form-group">
-                                                                            <input type="text" name="name" class="form-control"
+                                                                            <input type="text" name="name"
+                                                                                class="form-control"
                                                                                 value="{{ $service->name }}" required>
                                                                         </div>
                                                                         <label>Price</label>
                                                                         <div class="form-group">
-                                                                            <input type="number" name="price" class="form-control"
+                                                                            <input type="number" name="price"
+                                                                                class="form-control"
                                                                                 value="{{ $service->price }}">
                                                                         </div>
                                                                         <div class="form-group">
@@ -159,16 +163,19 @@
                                                                             <label>Current Image</label>
                                                                             <div>
                                                                                 <img src="{{ asset('service_image/' . $service->image) }}"
-                                                                                    alt="Current Image" style="max-width: 150px; margin-bottom: 10px;">
+                                                                                    alt="Current Image"
+                                                                                    style="max-width: 150px; margin-bottom: 10px;">
                                                                             </div>
                                                                             <label>Change Image (optional)</label>
-                                                                            <input type="file" name="image" class="form-control">
+                                                                            <input type="file" name="image"
+                                                                                class="form-control">
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
                                                                         <span>Cancel</span>
                                                                     </button>
                                                                     <button type="submit" class="btn btn-primary ml-1">
@@ -324,6 +331,5 @@
                 });
             });
         });
-
     </script>
 @endsection

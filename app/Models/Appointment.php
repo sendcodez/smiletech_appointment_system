@@ -23,10 +23,12 @@ class Appointment extends Model
 
     ];
 
+    /*
     public function service()
     {
         return $this->belongsTo(Service::class);
     }
+        */
 
     // In App\Models\Appointment.php
 
