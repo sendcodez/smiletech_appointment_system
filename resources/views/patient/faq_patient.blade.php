@@ -88,7 +88,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="text-center">ADD QUESTION</h3>
-                    <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" id="close" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
