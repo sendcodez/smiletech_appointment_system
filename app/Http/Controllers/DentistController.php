@@ -43,10 +43,10 @@ class DentistController extends Controller
                 'username' => 'required|string|max:255|unique:users',
                 'contact_number' => 'required|string|max:255',
                 'address' => 'required|string|max:255', 
-                'about' => 'required|string|max:255',
+                'about' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|string|min:8',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:30748',
                 
             ]);
             $image = $request->file('image');
@@ -133,10 +133,10 @@ class DentistController extends Controller
                 'username' => 'required|string|max:255',
                 'contact_number' => 'required|string|max:255',
                 'address' => 'required|string|max:255', 
-                'about' => 'required|string|max:255',
+                'about' => 'required',
                 'email' => 'required|email|',
                 'password' => 'required|string|min:8',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:30748'
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:30748'
             ]);
 
             // Update dentist properties
