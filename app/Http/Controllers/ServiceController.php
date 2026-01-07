@@ -37,7 +37,7 @@ class ServiceController extends Controller
                 'name' => 'required|string|max:255',
                 'price' => 'nullable|numeric',
                 'description' => 'required',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748'
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:30748'
             ]);
             $image = $request->file('image');
 
@@ -141,7 +141,7 @@ class ServiceController extends Controller
         'name' => 'required|string|max:255',
         'price' => 'nullable|numeric',
         'description' => 'required',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:2048'
     ]);
 
     $service->name = $request->name;
