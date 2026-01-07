@@ -150,7 +150,7 @@
                                                                         </div>
                                                                         <label>Price</label>
                                                                         <div class="form-group">
-                                                                            <input type="number" name="price"
+                                                                            <input type="text" name="price"
                                                                                 class="form-control"
                                                                                 value="{{ $service->price }}">
                                                                         </div>
@@ -225,7 +225,7 @@
                                                 </div>
                                                 <label>Price</label>
                                                 <div class="form-group">
-                                                    <input type="number" name="price" class="form-control">
+                                                    <input type="text" name="price" class="form-control">
                                                 </div>
                                                 <div class="form-group">
                                                     <label> Short Description</label>
