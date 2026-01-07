@@ -18,7 +18,14 @@
 
 
 </head>
+<style>
+.no-active.mm-active > a,
+.no-active > a.active {
+    background: transparent !important;
+    color: inherit !important;
+}
 
+</style>
 <body>
     @if (session('success'))
         <script>
@@ -36,6 +43,7 @@
         <script>
             Swal.fire({
                 icon: 'error',
+                sd
                 title: 'Error!',
                 text: '{{ session('error') }}',
                 showConfirmButton: false,
@@ -44,9 +52,8 @@
         </script>
     @endif
 
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
+
+    <!--********************************** Main wrapper start ***********************************-->
     <div id="main-wrapper">
 
 
@@ -54,7 +61,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="#" class="brand-logo">
                 <img style="width:30%" src="{{ asset('frontend/img/smiletech_logo.png') }}" alt="">
                 <h1 class="brand-title"> SMILETECH </h1>
             </a>
@@ -151,7 +158,7 @@
                                 <span class="nav-text">Dashboard</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="no-active">
                             <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                                 <i class="flaticon-381-calendar"></i>
                                 <span class="nav-text">Appointments</span>
