@@ -35,7 +35,7 @@ class ServiceController extends Controller
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
-                'price' => 'nullable|numeric',
+                'price' => 'nullable|string',
                 'description' => 'required',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:30748'
             ]);
@@ -139,7 +139,7 @@ class ServiceController extends Controller
 
     $request->validate([
         'name' => 'required|string|max:255',
-        'price' => 'nullable|numeric',
+        'price' => 'nullable|string',
         'description' => 'required',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:2048'
     ]);
