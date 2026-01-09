@@ -96,7 +96,7 @@
                             <div class="card-header border-0 pb-0 d-sm-flex d-block">
                                 <div>
                                     <h4 class="card-title mb-1">Customer Map</h4>
-                                    <small class="mb-0">Lorem Ipsum is simply dummy text of the printing</small>
+                                    <small class="mb-0">Overview of customer appointment trends</small>
                                 </div>
                                 <div class="card-action card-tabs mt-3 mt-sm-0">
 
