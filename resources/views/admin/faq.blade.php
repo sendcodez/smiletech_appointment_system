@@ -83,6 +83,7 @@
                                                                 </g>
                                                             </svg>
                                                             <div class="dropdown-menu dropdown-menu-right">
+                                                                <!-- Status Toggle -->
                                                                 <form method="POST"
                                                                     action="{{ route('update-faq-status', ['id' => $faq->id]) }}">
                                                                     @csrf
@@ -92,20 +93,28 @@
                                                                     <button type="submit" class="dropdown-item status-btn"
                                                                         style="text-decoration: none;">
                                                                         @if ($faq->status == 1)
-                                                                            <span class="">Disapprove</span>
+                                                                            <i class="dw dw-close"></i> Disapprove
                                                                         @else
-                                                                            <span class="">Approve</span>
+                                                                            <i class="dw dw-checkmark"></i> Approve
                                                                         @endif
                                                                     </button>
                                                                 </form>
 
+                                                                <!-- Edit Button -->
+                                                                <button type="button" class="dropdown-item"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#editFaqModal{{ $faq->id }}">
+                                                                    <i class="dw dw-edit2"></i> Edit
+                                                                </button>
+
+                                                                <!-- Delete Button -->
                                                                 <form action="{{ route('faq.destroy', $faq->id) }}"
                                                                     method="POST" style="display: inline;"
                                                                     id="deleteForm{{ $faq->id }}">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="button" class="dropdown-item delete-btn">
-                                                                        <i class="dw dw-trash"></i>Delete
+                                                                        <i class="dw dw-trash"></i> Delete
                                                                     </button>
                                                                 </form>
                                                             </div>
@@ -119,6 +128,67 @@
 
                     </div>
                 </div>
+
+                <!-- Edit Modals -->
+                @foreach ($faqs as $faq)
+                    <div class="modal fade" id="editFaqModal{{ $faq->id }}" tabindex="-1"
+                        aria-labelledby="editFaqModalLabel{{ $faq->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="text-center">Edit FAQ</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="{{ route('faq.update', $faq->id) }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Category</label>
+                                                <div class="form-group">
+                                                    <select name="faq_category_id" class="form-control" required>
+                                                        <option value="">Select a Category</option>
+                                                        @foreach ($categories as $category)
+                                                            <option value="{{ $category->id }}"
+                                                                {{ $faq->faq_category_id == $category->id ? 'selected' : '' }}>
+                                                                {{ $category->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Question</label>
+                                                    <textarea class="form-control" name="question" style="height: 150px;" required>{{ $faq->question }}</textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Answer</label>
+                                                    <textarea class="form-control" name="answer" style="height: 150px;" required>{{ $faq->answer }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                <span>Cancel</span>
+                                            </button>
+                                            <button type="submit" class="btn btn-primary ml-1">
+                                                <i class="bx bx-check d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Update</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
 
                 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel"
                     aria-hidden="true">

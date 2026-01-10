@@ -164,6 +164,120 @@ class FaqController extends Controller
         }
         return redirect()->back()->with('error', 'No status provided.');
     }
+
+
+    public function faq_update(Request $request, $id)
+{
+    try {
+        // Log the incoming request data
+        \Log::info('FAQ Update Request', [
+            'id' => $id,
+            'data' => $request->all()
+        ]);
+
+        $faq = FAQ::findOrFail($id);
+        
+        $validatedData = $request->validate([
+            'faq_category_id' => 'required',
+            'question' => 'required|string',
+            'answer' => 'required|string',
+        ]);
+
+        $faq->faq_category_id = $validatedData['faq_category_id'];
+        $faq->question = $validatedData['question'];
+        $faq->answer = $validatedData['answer'];
+        $faq->save();
+
+        \Log::info('FAQ Updated Successfully', ['faq_id' => $faq->id]);
+
+        // Log activity if you have activity logging
+        if (class_exists('App\Models\ActivityLog')) {
+            $user = Auth::user();
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname ?? $user->name,
+                'action' => 'updated_faq',
+                'description' => 'Updated FAQ: ' . substr($faq->question, 0, 50),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'FAQ updated successfully.');
+        
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        \Log::error('FAQ Validation Error', ['errors' => $e->errors()]);
+        return redirect()->back()
+            ->withErrors($e->errors())
+            ->withInput()
+            ->with('error', 'Validation failed: ' . json_encode($e->errors()));
+            
+    } catch (\Exception $e) {
+        \Log::error('FAQ Update Error', [
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Error: ' . $e->getMessage());
+    }
+}
+
+public function faq_category_update(Request $request, $id)
+{
+    try {
+        $category = FaqCategory::findOrFail($id);
+        
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:faq_category,name,' . $id,
+        ]);
+
+        $category->update([
+            'name' => $validatedData['name'],
+        ]);
+
+        // Log activity if you have activity logging
+        $user = Auth::user();
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname ?? $user->name,
+            'action' => 'updated_faq_category',
+            'description' => 'Updated FAQ category: ' . $category->name,
+        ]);
+
+        return redirect()->back()->with('success', 'Category updated successfully.');
+        
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', $e->getMessage());
+    }
+}
+
+public function faq_category_destroy($id)
+{
+    try {
+        $category = FaqCategory::findOrFail($id);
+        
+        // Check if category has FAQs
+        if ($category->faqs()->count() > 0) {
+            return redirect()->back()->with('error', 'Cannot delete category with existing FAQs. Please delete or reassign the FAQs first.');
+        }
+
+        $categoryName = $category->name;
+        $category->delete();
+
+        // Log activity
+        $user = Auth::user();
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname ?? $user->name,
+            'action' => 'deleted_faq_category',
+            'description' => 'Deleted FAQ category: ' . $categoryName,
+        ]);
+
+        return redirect()->back()->with('success', 'Category deleted successfully.');
+        
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', $e->getMessage());
+    }
+}
     /**
      * Show the form for creating a new resource.
      */

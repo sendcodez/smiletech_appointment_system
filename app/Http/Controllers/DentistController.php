@@ -16,7 +16,7 @@ class DentistController extends Controller
   
      public function index()
      {
-         $dentists = Dentist::all();
+         $dentists = Dentist::with('user')->get();
  
          return view ('admin.add_dentist', compact('dentists'));
      }
@@ -121,64 +121,85 @@ class DentistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        try {
-            $dentist = Dentist::findOrFail($id);
+    public function update(Request $request, $id)
+{
+    try {
+        $dentist = Dentist::findOrFail($id);
+        
+        $validatedData = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $dentist->user_id,
+            'contact_number' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'about' => 'required',
+            'email' => 'required|email|unique:users,email,' . $dentist->user_id,
+            'password' => 'nullable|string|min:8',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:30748',
+        ]);
 
-            $request->validate([
-                'firstname' => 'required|string|max:255',
-                'middlename' => 'nullable|string|max:255',
-                'lastname' => 'required|string|max:255',
-                'username' => 'required|string|max:255',
-                'contact_number' => 'required|string|max:255',
-                'address' => 'required|string|max:255', 
-                'about' => 'required',
-                'email' => 'required|email|',
-                'password' => 'required|string|min:8',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif|max:30748'
-            ]);
-
-            // Update dentist properties
-            $dentist->firstname = $request->input('firstname');
-            $dentist->middlename = $request->input('middlename');
-            $dentist->lastname = $request->input('lastname');
-            $dentist->username = $request->input('username');
-            $dentist->contact_number = $request->input('contact_number');
-            $dentist->address = $request->input('address');
-            $dentist->about = $request->input('about');
-            $dentist->email = $request->input('email');
-            $dentist->password = $request->input('password');
-            $dentist->attachment = 'attachment';
-
-            // Upload new image if provided
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = $dentist->firstname . '_' . $dentist->lastname . '_' . time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('dentist_image'), $imageName);
-                $dentist->image = $imageName;
+        // Handle image upload if new image is provided
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($dentist->image && file_exists(public_path('dentist_image/' . $dentist->image))) {
+                unlink(public_path('dentist_image/' . $dentist->image));
             }
-            $user = Auth::user();
-            $action = 'update_dentist';
-            $description = 'Updated an information for: Dr. ' . $dentist->firstname . ' ' . $dentist->lastname;
-    
-            ActivityLog::create([
-                'user_id' => $user->id,
-                'name' => $user->firstname,
-                'action' => $action,
-                'description' => $description,
-            ]);
-            $dentist->save();
-
-
-
-            return redirect()->back()->with('success', 'Dentist updated successfully.');
-        } catch (\Exception $e) {
-            $errorMessage = $e->getMessage();
-            Log::error('Error occurred while updating dentist: ' . $e->getMessage());
-            return redirect()->back()->with('error', $errorMessage);
+            
+            $image = $request->file('image');
+            $imageName = $validatedData['firstname'] . '_' . $validatedData['lastname'] . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('dentist_image'), $imageName);
+            $validatedData['image'] = $imageName;
         }
+
+        // Update user record
+        $user = User::findOrFail($dentist->user_id);
+        $user->update([
+            'firstname' => $validatedData['firstname'],
+            'middlename' => $validatedData['middlename'],
+            'lastname' => $validatedData['lastname'],
+            'username' => $validatedData['username'],
+            'email' => $validatedData['email'],
+        ]);
+
+        // Update password only if provided
+        if (!empty($validatedData['password'])) {
+            $user->update(['password' => bcrypt($validatedData['password'])]);
+        }
+
+        // Update dentist record
+        $dentist->update([
+            'firstname' => $validatedData['firstname'],
+            'middlename' => $validatedData['middlename'],
+            'lastname' => $validatedData['lastname'],
+            'contact_number' => $validatedData['contact_number'],
+            'address' => $validatedData['address'],
+            'about' => $validatedData['about'],
+            'email' => $validatedData['email'],
+        ]);
+
+        if (isset($validatedData['image'])) {
+            $dentist->update(['image' => $validatedData['image']]);
+        }
+
+        if (!empty($validatedData['password'])) {
+            $dentist->update(['password' => bcrypt($validatedData['password'])]);
+        }
+
+        // Log activity
+        $currentUser = Auth::user();
+        ActivityLog::create([
+            'user_id' => $currentUser->id,
+            'name' => $currentUser->firstname,
+            'action' => 'updated_dentist',
+            'description' => 'Updated dentist: Dr. ' . $dentist->lastname,
+        ]);
+
+        return back()->with('success', 'Dentist updated successfully.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', $e->getMessage());
     }
+}
 
     /**
      * Remove the specified resource from storage.

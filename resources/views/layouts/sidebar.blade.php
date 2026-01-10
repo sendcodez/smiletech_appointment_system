@@ -19,40 +19,42 @@
 
 </head>
 <style>
-.no-active.mm-active > a,
-.no-active > a.active {
-    background: transparent !important;
-    color: inherit !important;
-}
-
+    .no-active.mm-active>a,
+    .no-active>a.active {
+        background: transparent !important;
+        color: inherit !important;
+    }
 </style>
+
 <body>
     @if (session('success'))
         <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 2000
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    confirmButtonColor: '#3085d6',
+                    timer: 2000
+                });
             });
         </script>
     @endif
 
     @if (session('error'))
         <script>
-            Swal.fire({
-                icon: 'error',
-                sd
-                title: 'Error!',
-                text: '{{ session('error') }}',
-                showConfirmButton: false,
-                timer: 2000
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: '{{ session('error') }}',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#d33',
+                });
             });
         </script>
     @endif
-
-
     <!--********************************** Main wrapper start ***********************************-->
     <div id="main-wrapper">
 

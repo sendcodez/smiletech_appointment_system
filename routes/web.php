@@ -58,7 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/dentist', [DentistController::class, 'index'])->name('dentist.index');
     Route::post('admin/add_dentists', [DentistController::class, 'store'])->name('dentist.store');
     Route::patch('/update-dentist-status/{id}', [DentistController::class, 'updateStatus'])->name('update-dentist-status');
-    Route::put('admin/update_dentist{dentist}', [DentistController::class, 'update'])->name('dentist.update');
+    //Route::put('admin/update_dentist{dentist}', [DentistController::class, 'update'])->name('dentist.update');
+    Route::put('/dentist/{id}', [DentistController::class, 'update'])->name('dentist.update');
     Route::delete('/dentist/{id}', [DentistController::class, 'destroy'])->name('dentist.destroy');
 
     //SERVICES ROUTE
@@ -134,6 +135,9 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/add-faqs', [FaqController::class, 'faq_store'])->name('faq.store');
     Route::patch('/update-faq-status/{id}', [FaqController::class, 'updateStatus'])->name('update-faq-status');
     Route::delete('/faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
+    Route::put('/faq/update/{id}', [FaqController::class, 'faq_update'])->name('faq.update');
+    Route::put('/faq-categories/{id}', [FaqController::class, 'faq_category_update'])->name('faq_categories.update');
+    Route::delete('/faq-categories/{id}', [FaqController::class, 'faq_category_destroy'])->name('faq_categories.destroy');
 
     //REPORTS ROUTE
     Route::get('admin/reports', [ReportsController::class, 'index'])->name('reports.index');
