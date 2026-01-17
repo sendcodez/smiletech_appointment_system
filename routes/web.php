@@ -149,6 +149,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/appointments/completed', [AppointmentController::class, 'getCompleted'])->name('appointments.completed');
     Route::get('/appointments/all', [AppointmentController::class, 'getAllAppointments'])->name('appointments.all');
+     // Mark appointment as no-show (Admin only)
+    Route::post('/appointments/{id}/mark-no-show', [AppointmentController::class, 'markNoShow'])
+        ->name('appointments.markNoShow');
+    
+    // Reset user penalty (Admin only)
+    Route::post('/penalties/{userId}/reset', [AppointmentController::class, 'resetPenalty'])
+        ->name('penalties.reset');
+
     Route::get('/patients/all', [PatientProfileController::class, 'getAllPatients'])->name('patients.all');
     Route::get('/users/all', [UserController::class, 'getUser'])->name('users.all');
 });

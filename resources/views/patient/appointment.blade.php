@@ -1,18 +1,55 @@
 @extends('layouts.sidebar')
 @section('contents')
-    @php
-        $hasAppointment = \App\Models\Appointment::where('user_id', Auth::id())
-            ->whereIn('status', [1, 2])
-            ->exists();
-    @endphp
-
-
-
     <div class="content-body">
         <div class="container-fluid">
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
+                        @php
+                            $hasAppointment = \App\Models\Appointment::where('user_id', Auth::id())
+                                ->whereIn('status', [1, 2])
+                                ->exists();
+
+                            $eligibility = app(\App\Services\PenaltyService::class)->checkUserEligibility(Auth::user());
+                            $penalty = Auth::user()->penalty;
+                        @endphp
+
+                        {{-- Add penalty warning banner after page-titles --}}
+                        @if ($penalty && $penalty->no_show_count > 0)
+                            <div class="row">
+                                <div class="col-12">
+                                    @if ($penalty->isCurrentlyBlocked())
+                                        <div class="alert alert-danger alert-dismissible fade show">
+                                            <strong>Account Blocked!</strong> {{ $penalty->penalty_reason }}
+                                            @if ($penalty->blocked_until)
+                                                <br>Your account will be unblocked on:
+                                                <strong>{{ $penalty->blocked_until->format('F d, Y h:i A') }}</strong>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="alert alert-warning alert-dismissible fade show">
+                                            <strong>Warning!</strong> You have
+                                            <strong>{{ $penalty->no_show_count }}</strong> no-show
+                                            appointment(s).
+                                            {{ $penalty->penalty_reason }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- Update the modal to show block status --}}
+                        @if (!$eligibility['eligible'])
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    document.querySelector("#multiStepForm").style.pointerEvents = 'none';
+                                    document.querySelector("#multiStepForm").style.opacity = '0.5';
+                                });
+                            </script>
+                        @elseif ($hasAppointment)
+                            {{-- Your existing hasAppointment alert --}}
+                        @endif
+
                         <h4>Appointments</h4>
 
                     </div>
@@ -43,6 +80,7 @@
                                             <th>DAY</th>
                                             <th>TIME PERIOD</th>
                                             <th>REFERENCE NUMBER</th>
+                                            <th>APPOINTMENT TYPE</th>
                                             <th>STATUS</th>
                                             <th>REASON <i><small>(IF CANCELLED)</small></i></th>
                                             <th>ACTION</th>
@@ -74,6 +112,13 @@
                                                 </td>
 
                                                 <td>{{ $app->reference_number }}</td>
+                                                <td>
+                                                    @if ($app->appointment_type == 1)
+                                                        Appointment for myself
+                                                    @elseif ($app->appointment_type == 0)
+                                                        Appointment for {{ ucfirst($app->name) }}
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     @if ($app->status == 1)
                                                         <span class="badge badge-warning">Pending</span>
@@ -119,7 +164,8 @@
                                                             @endif
 
                                                             @if ($app->status == 4 || $app->status == 3)
-                                                                <form action="{{ route('appointments.destroy', $app->id) }}"
+                                                                <form
+                                                                    action="{{ route('appointments.destroy', $app->id) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
@@ -241,26 +287,24 @@
                                     <div id="step1">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label>First Name</label>
+                                                <label>Appointment Type</label>
                                                 <div class="form-group">
-                                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"
-                                                        class="form-control" readonly>
-                                                    <input type="text" style="background-color: rgb(202, 197, 197)"
-                                                        name="firstname" value="{{ Auth::user()->firstname }}"
-                                                        class="form-control" readonly>
+                                                    <select id="appointmentType" class="form-control"
+                                                        onchange="toggleFields()" name="appointment_type">
+                                                        <option value="1">Appointment for myself</option>
+                                                        <option value="0">Appointment for someone</option>
+                                                    </select>
                                                 </div>
-                                                <label>Middle Name</label>
-                                                <div class="form-group">
-                                                    <input type="text" style="background-color: rgb(202, 197, 197)"
-                                                        name="middlename" value="{{ Auth::user()->middlename }}"
-                                                        class="form-control" readonly>
+                                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"
+                                                    class="form-control" readonly>
+                                                <div id="someoneNameWrapper" style="display: none;">
+                                                    <label>Name of the Person</label>
+                                                    <div class="form-group">
+                                                        <input type="text" name="name" id="name"
+                                                            class="form-control" placeholder="Enter full name">
+                                                    </div>
                                                 </div>
-                                                <label>Last Name</label>
-                                                <div class="form-group">
-                                                    <input type="text" style="background-color: rgb(202, 197, 197)"
-                                                        name="lastname" value="{{ Auth::user()->lastname }}"
-                                                        class="form-control" readonly>
-                                                </div>
+
                                                 <label>Select Service*</label>
                                                 <div class="form-group">
                                                     <select id="serviceSelect" name="service_id[]" class="form-control"
@@ -294,26 +338,31 @@
                                         </div>
                                     </div>
                                     <div class="form-group mt-3">
-                                        <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; max-height: 100px; overflow-y: auto; font-size: 14px;">
+                                        <div
+                                            style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; max-height: 100px; overflow-y: auto; font-size: 14px;">
                                             <strong>Terms & Conditions:</strong>
                                             <p>
-                                                By submitting this appointment, you agree to attend on the selected date and time.
-                                                Any cancellations must be made at least 24 hours in advance. Failure to attend without prior notice may limit future bookings.
+                                                By submitting this appointment, you agree to attend on the selected date and
+                                                time.
+                                                Any cancellations must be made at least 24 hours in advance. Failure to
+                                                attend without prior notice may limit future bookings.
                                             </p>
                                         </div>
                                         <div class="form-check mt-2">
                                             <input type="checkbox" class="form-check-input" id="agreeTerms">
-                                            <label class="form-check-label" for="agreeTerms">I agree to the terms and conditions</label>
+                                            <label class="form-check-label" for="agreeTerms">I agree to the terms and
+                                                conditions</label>
                                         </div>
                                     </div>
-                                    
+
 
                                     <div class="modal-footer">
                                         <button type="reset" class="btn btn-danger">
                                             <i class="bx bx-x d-block d-sm-none"></i>
                                             <span class="d-none d-sm-block">Reset</span>
                                         </button>
-                                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal" id="submitBtn" disabled>
+                                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal"
+                                            id="submitBtn" disabled>
                                             <i class="bx bx-check d-block d-sm-none"></i>
                                             <span class="d-none d-sm-block">Submit</span>
                                         </button>
@@ -558,13 +607,48 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-        const agreeCheckbox = document.getElementById('agreeTerms');
-        const submitBtn = document.getElementById('submitBtn');
+        document.addEventListener('DOMContentLoaded', function() {
+            const agreeCheckbox = document.getElementById('agreeTerms');
+            const submitBtn = document.getElementById('submitBtn');
 
-        agreeCheckbox.addEventListener('change', function () {
-            submitBtn.disabled = !agreeCheckbox.checked;
+            agreeCheckbox.addEventListener('change', function() {
+                submitBtn.disabled = !agreeCheckbox.checked;
+            });
         });
-    });
+
+
+        function toggleFields() {
+            const type = document.getElementById('appointmentType').value;
+
+            const fields = ['firstname', 'middlename', 'lastname'];
+            const someoneWrapper = document.getElementById('someoneNameWrapper');
+
+            if (type === '0') {
+                // Show "Name of the Person"
+                someoneWrapper.style.display = 'block';
+
+                fields.forEach(id => {
+                    const field = document.getElementById(id);
+                    field.readOnly = false;
+                    field.value = '';
+                    field.style.backgroundColor = '#fff';
+                });
+            } else {
+                // Hide "Name of the Person"
+                someoneWrapper.style.display = 'none';
+                document.getElementById('name').value = '';
+
+                fields.forEach(id => {
+                    const field = document.getElementById(id);
+                    field.readOnly = true;
+                    field.style.backgroundColor = 'rgb(202, 197, 197)';
+                });
+
+                // Restore user data
+                document.getElementById('firstname').value = "{{ Auth::user()->firstname }}";
+                document.getElementById('middlename').value = "{{ Auth::user()->middlename }}";
+                document.getElementById('lastname').value = "{{ Auth::user()->lastname }}";
+            }
+        }
     </script>
 @endsection

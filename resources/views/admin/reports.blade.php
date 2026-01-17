@@ -10,47 +10,75 @@
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
                         <h4>Generate Report</h4>
-
                     </div>
                 </div>
-
             </div>
             <!-- row -->
 
-
             <div class="row">
                 <div class="col-12">
-
                     <div class="card">
-
                         <div class="card-header">
+                            <h4 class="card-title">Filter Options</h4>
+                        </div>
 
-                            <div class="col-md-6 col-sm-6">
-                                <form method="POST" action="{{ route('reports.filter') }}">
-                                    @csrf
-                                    <div class="form-group">
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('reports.filter') }}">
+                                @csrf
+                                <div class="row align-items-end">
 
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="startDate">Start Date:</label>
-                                                    <input type="date" id="startDate" name="startDate"
-                                                        class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="endDate">End Date:</label>
-                                                    <input type="date" id="endDate" name="endDate"
-                                                        class="form-control">
-                                                </div>
-                                            </div>
+                                    <!-- Start Date -->
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="startDate">Start Date:</label>
+                                            <input type="date" id="startDate" name="startDate" class="form-control">
                                         </div>
-                                        <button type="submit" class="btn btn-info">Filter</button>
                                     </div>
 
-                                </form>
-                            </div>
+                                    <!-- End Date -->
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="endDate">End Date:</label>
+                                            <input type="date" id="endDate" name="endDate" class="form-control">
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Services Filter -->
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="servicesFilter">Services</label>
+                                            <select id="servicesFilter" class="selectpicker form-control">
+                                                <option value="">All</option>
+                                                @foreach ($services as $service)
+                                                    <option value="{{ $service->name }}">{{ $service->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Status Filter -->
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="statusFilter">Status</label>
+                                            <select id="statusFilter" class="selectpicker form-control">
+                                                <option value="">All</option>
+                                                <option value="Pending">Pending</option>
+                                                <option value="Approved">Approved</option>
+                                                <option value="Completed">Completed</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Filter Button -->
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-info btn-block">Filter</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
                         <div class="card-body">
@@ -58,39 +86,6 @@
                                 <button type="button" class="btn btn-success float-right"
                                     onclick="printTable()">Print</button>
                                 <table id="example3" class="display" style="min-width: 845px">
-                                    <label for="">Filter by:</label>
-                                    <div class="row">
-                                        <div class="col-md-2 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <label for="servicesFilter">Services</label>
-                                                    <select id="servicesFilter" class="selectpicker form-control">
-                                                        <option value="">All</option>
-                                                        @foreach ($services as $service)
-                                                            <option value="{{ $service->name }}">{{ $service->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <label for="statusFilter">Status</label>
-                                                    <select id="statusFilter" class="selectpicker form-control">
-                                                        <option value="">All</option>
-                                                        <option value="Pending">Pending</option>
-                                                        <option value="Approved">Approved</option>
-                                                        <option value="Completed">Completed</option>
-                                                        <option value="Cancelled">Cancelled</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <thead>
                                         <tr>
                                             <th>DATE</th>
@@ -227,7 +222,7 @@
             printWindow.document.write('.title { width: 80%; text-align: center; font-size: 1.5rem; }');
             printWindow.document.write(
                 '.designation { text-align: left; font-family: Arial, sans-serif; font-weight: 100;font-size:13px;margin-top:-2%; }'
-                ); // Added designation class
+            ); // Added designation class
             printWindow.document.write('.address { width: 20%; text-align: right; }');
             printWindow.document.write('.display { border-collapse: collapse; width: 100%; }');
             printWindow.document.write('.display th, .display td { border: 1px solid #ddd; padding: 8px; }');

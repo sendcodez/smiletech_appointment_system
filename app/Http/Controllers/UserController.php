@@ -111,7 +111,7 @@ class UserController extends Controller
             'contact' => $validatedData['contact'] ?? null,
             'contact_person' => $validatedData['contact_person'] ?? null,
             'contact_person_number' => $validatedData['contact_person_number'] ?? null,
-            'usertype' => '3',
+            'usertype' => $validatedData['usertype'] ?? '3',
         ]);
 
         

@@ -53,7 +53,7 @@ class PatientProfileController extends Controller
             'password' => 'required|string|min:8',
             'birthday' => 'nullable|date',
             'address' => 'nullable|string',
-            'contact' => 'nullable|string',
+            'contact' => ['required', 'regex:/^09\d{9}$/'],
             'contact_person' => 'nullable|string',
             'contact_person_number' => 'nullable|string',
             'usertype' => 'nullable|integer',

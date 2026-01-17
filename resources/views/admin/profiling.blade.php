@@ -1,9 +1,7 @@
 @extends('layouts.sidebar')
 @section('title', 'Patients Information')
 
-
 @section('contents')
-
     <div class="content-body">
         <div class="container-fluid">
             <div class="row page-titles mx-0">
@@ -33,7 +31,7 @@
                 </div>
             @endif
 
-            <!-- Patient Cards View -->
+            <!-- Patient DataTable View -->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -45,98 +43,105 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                @forelse($patients as $patient)
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
-                                        <div class="card patient-card h-100 shadow-sm">
-                                            <div class="card-body">
-                                                <div class="text-center mb-3">
-                                                    <!--
-                                                                                                                                                                                    <div class="avatar-circle mx-auto mb-3">
-                                                                                                                                                                                        <span
-                                                                                                                                                                                            class="initials">{{ strtoupper(substr($patient->firstname, 0, 1) . substr($patient->lastname, 0, 1)) }}</span>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                -->
-                                                    <h5 class="card-title mb-1 bold" style="text-transform: uppercase;">
-                                                        {{ $patient->firstname }}
-                                                        {{ $patient->lastname }}</h5>
-                                                    <p class="text-muted small mb-0">{{ $patient->username ?? 'N/A' }}</p>
-                                                </div>
-
-                                                <div class="patient-info">
-
-                                                    <div class="info-item">
-                                                        <i class="fa fa-phone text-success"></i>
-                                                        <span><strong>Contact:</strong> {{ $patient->number }}</span>
+                            <div class="table-responsive">
+                                <table id="patientsTable" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Username</th>
+                                            <th>Contact</th>
+                                            <th>Address</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($patients as $patient)
+                                            <tr>
+                                                <td style="text-transform: uppercase;">
+                                                    {{ $patient->firstname }} {{ $patient->lastname }}
+                                                </td>
+                                                <td>{{ $patient->username ?? 'N/A' }}</td>
+                                                <td>{{ $patient->number }}</td>
+                                                <td>{{ $patient->address }}</td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-sm btn-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#viewModal{{ $patient->id }}" title="View">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-warning"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editModal{{ $patient->id }}" title="Edit">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                                            onclick="confirmDelete({{ $patient->id }})" title="Delete">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
                                                     </div>
-                                                    <div class="info-item">
-                                                        <i class="fa fa-map-marker text-danger"></i>
-                                                        <span><strong>Address:</strong>
-                                                            {{ Str::limit($patient->address, 30) }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer bg-light">
-                                                <div class="btn-group w-100" role="group">
-                                                    <button type="button" class="btn btn-sm btn-primary"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#viewModal{{ $patient->id }}">
-                                                        <i class="fa fa-eye"></i> View
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-warning"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editModal{{ $patient->id }}">
-                                                        <i class="fa fa-edit"></i> Edit
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-danger delete-btn"
-                                                        onclick="confirmDelete({{ $patient->id }})">
-                                                        <i class="fa fa-trash"></i> Delete
-                                                    </button>
-                                                </div>
-                                                <form id="deleteForm{{ $patient->id }}"
-                                                    action="{{ route('patients.destroy', $patient->id) }}" method="POST"
-                                                    style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                    <form id="deleteForm{{ $patient->id }}"
+                                                        action="{{ route('patients.destroy', $patient->id) }}"
+                                                        method="POST" style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                </td>
+                                            </tr>
 
-
-                                    <!-- Include modals for each patient -->
-                                    @include('modal.view_patient', ['patient' => $patient])
-                                    @include('modal.edit_patient', ['patient' => $patient])
-
-                                @empty
-                                    <div class="col-12">
-                                        <div class="alert alert-info text-center">
-                                            <i class="fa fa-info-circle fa-3x mb-3"></i>
-                                            <h4>No Patients Found</h4>
-                                            <p>Start by adding your first patient record.</p>
-                                        </div>
-                                    </div>
-                                @endforelse
+                                            <!-- Include modals for each patient -->
+                                            @include('modal.view_patient', ['patient' => $patient])
+                                            @include('modal.edit_patient', ['patient' => $patient])
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Add Patient Modal (keep your existing add modal) -->
-            <!-- ... existing add modal code ... -->
         </div>
     </div>
 
-
     @include('modal.add_patient', ['patient' => $patient])
 
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
 
+    <!-- jQuery -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
         $(document).ready(function() {
+            // Initialize DataTable
+            $('#patientsTable').DataTable({
+                "pageLength": 10,
+                "ordering": true,
+                "searching": true,
+                "lengthChange": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                    "search": "Search patients:",
+                    "lengthMenu": "Show _MENU_ patients per page",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ patients",
+                    "infoEmpty": "No patients available",
+                    "infoFiltered": "(filtered from _MAX_ total patients)",
+                    "zeroRecords": "No matching patients found"
+                },
+                "columnDefs": [{
+                        "orderable": false,
+                        "targets": 4
+                    } // Disable sorting on Actions column
+                ]
+            });
+
+            // Close modal handler
             $('#close').click(function() {
                 $(this).closest('.modal').modal('hide');
             });
@@ -144,7 +149,6 @@
 
         // Delete confirmation function
         function confirmDelete(patientId) {
-            // Using SweetAlert2 if available
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: 'Are you sure?',
@@ -161,12 +165,12 @@
                     }
                 });
             } else {
-                // Fallback to native confirm
                 if (confirm('Are you sure you want to delete this patient? This action cannot be undone.')) {
                     document.getElementById('deleteForm' + patientId).submit();
                 }
             }
         }
+
         // Form validation
         document.getElementById('addPatientForm').addEventListener('submit', function(e) {
             const password = document.querySelector('input[name="password"]').value;

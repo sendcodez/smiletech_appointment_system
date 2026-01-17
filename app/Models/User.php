@@ -82,5 +82,17 @@ public function getAgeAttribute()
 {
     return Carbon::parse($this->birthday)->age;
 }
+public function penalty()
+{
+    return $this->hasOne(UserPenalty::class);
+}
+
+public function getOrCreatePenalty()
+{
+    return $this->penalty()->firstOrCreate(
+        ['user_id' => $this->id],
+        ['no_show_count' => 0, 'is_blocked' => false]
+    );
+}
 
 }

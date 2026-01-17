@@ -105,9 +105,12 @@
                                     <div class="form-group">
                                         <label>Contact Number</label>
                                         <input type="text" name="contact" class="form-control"
-                                            placeholder="+63 XXX XXX XXXX">
+                                            placeholder="0919XXXXXXX" pattern="^09\d{9}$" maxlength="11"
+                                            inputmode="numeric" required>
+                                        <small class="text-muted">Format: 0919XXXXXXX</small>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="form-group">

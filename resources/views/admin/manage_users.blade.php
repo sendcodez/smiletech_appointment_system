@@ -33,7 +33,7 @@
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            
+
                                             <th>ID</th>
                                             <th>NAME</th>
                                             <th>EMAIL</th>
@@ -46,7 +46,7 @@
                                     <tbody>
                                         @forelse($users as $user)
                                             <tr>
-                                                
+
                                                 <td>{{ $user->id }}</td>
                                                 <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                                                 <td>{{ $user->email }}</td>
@@ -57,22 +57,26 @@
                                                         <span class="badge badge-danger">Inactive</span>
                                                     @endif
                                                 </td>
-                                                <td> @if ($user->usertype == 1)
-                                                    <span class="">Admin</span>
-                                                    @elseif ($user->usertype == 2)
-                                                    <span class="">Dentist</span>
-                                                    @else ($user->usertype == 3)
-                                                    <span class="">Patient</span>
-                                                   
-                                                @endif</td>
                                                 <td>
-                                                    @if($user->created_at)
-                                                        {{ $user->created_at->toDateString() }}
+                                                    @if ($user->usertype == 1)
+                                                        <span class="">Admin</span>
+                                                    @elseif ($user->usertype == 2)
+                                                        <span class="">Dentist</span>
+                                                    @elseif ($user->usertype == 4)
+                                                        <span class="">Staff</span>
                                                     @else
-                                                    2024-05-08
+                                                        ($user->usertype == 3)
+                                                        <span class="">Patient</span>
                                                     @endif
                                                 </td>
-                                                
+                                                <td>
+                                                    @if ($user->created_at)
+                                                        {{ $user->created_at->toDateString() }}
+                                                    @else
+                                                        2024-05-08
+                                                    @endif
+                                                </td>
+
                                                 <td style="text-align: center">
                                                     <div class="dropdown ml-auto text-right">
                                                         <div class="btn-link text-center" data-toggle="dropdown">
@@ -178,13 +182,16 @@
                                                 <label>User type</label>
                                                 <div class="form-group">
                                                     <div class="radio">
-                                                        <label><input type="radio" name="usertype" value="1"> Admin</label>
+                                                        <label><input type="radio" name="usertype" value="1">
+                                                            Admin</label>
                                                     </div>
                                                     <div class="radio">
-                                                        <label><input type="radio" name="usertype" value="2"> Dentist</label>
+                                                        <label><input type="radio" name="usertype" value="4">
+                                                            Staff</label>
                                                     </div>
                                                     <div class="radio">
-                                                        <label><input type="radio" name="usertype" value="3"> Patient</label>
+                                                        <label><input type="radio" name="usertype" value="3">
+                                                            Patient</label>
                                                     </div>
                                                 </div>
                                             </div>

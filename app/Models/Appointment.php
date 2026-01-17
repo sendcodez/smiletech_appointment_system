@@ -20,6 +20,10 @@ class Appointment extends Model
         'time',
         'remarks',
         'reference_number',
+        'appointment_type',
+        'name',
+        'is_no_show',
+        'marked_no_show_at',
 
     ];
 

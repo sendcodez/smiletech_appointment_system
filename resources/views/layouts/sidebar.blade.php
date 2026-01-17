@@ -154,116 +154,139 @@
         <div class="deznav">
             <div class="deznav-scroll">
                 <ul class="metismenu" id="menu">
-                    @if (Auth::user()->usertype == '1')
-                        <li><a href="{{ route('admin.dashboard') }}" class="ai-icon" aria-expanded="false">
-                                <i class="flaticon-381-networking"></i>
-                                <span class="nav-text">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="no-active">
-                            <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                                <i class="flaticon-381-calendar"></i>
-                                <span class="nav-text">Appointments</span>
-                            </a>
-                            <ul aria-expanded="false">
-                                <li><a href="{{ route('status.pending') }}">Pending</a></li>
-                                <li><a href="{{ route('status.approved') }}">Approved</a></li>
-                                <li><a href="{{ route('status.completed') }}">Completed</a></li>
-                                <li><a href="{{ route('status.cancelled') }}">Cancelled</a></li>
-                            </ul>
-                        </li>
+                    @auth
+
+                        {{-- ================= ADMIN + STAFF ================= --}}
+                        @if (in_array(Auth::user()->usertype, ['1', '4']))
+                            {{-- Dashboard --}}
+                            <li>
+                                <a href="{{ route('admin.dashboard') }}" class="ai-icon">
+                                    <i class="flaticon-381-networking"></i>
+                                    <span class="nav-text">Dashboard</span>
+                                </a>
+                            </li>
+
+                            {{-- Appointments --}}
+                            <li class="no-active">
+                                <a class="has-arrow ai-icon" href="javascript:void(0);">
+                                    <i class="flaticon-381-calendar"></i>
+                                    <span class="nav-text">Appointments</span>
+                                </a>
+                                <ul>
+                                    <li><a href="{{ route('status.pending') }}">Pending</a></li>
+                                    <li><a href="{{ route('status.approved') }}">Approved</a></li>
+                                    <li><a href="{{ route('status.completed') }}">Completed</a></li>
+                                    <li><a href="{{ route('status.cancelled') }}">Cancelled</a></li>
+                                </ul>
+                            </li>
+
+                            {{-- Dentists --}}
+                            <li>
+                                <a href="{{ route('dentist.index') }}" class="ai-icon">
+                                    <i class="fa fa-stethoscope"></i>
+                                    <span class="nav-text">Dentists</span>
+                                </a>
+                            </li>
+
+                            {{-- Patients --}}
+                            <li>
+                                <a href="{{ route('patients.index') }}" class="ai-icon">
+                                    <i class="fa fa-users"></i>
+                                    <span class="nav-text">Patients</span>
+                                </a>
+                            </li>
+
+                            {{-- Services --}}
+                            <li>
+                                <a href="{{ route('service.index') }}" class="ai-icon">
+                                    <i class="fa fa-list-alt"></i>
+                                    <span class="nav-text">Services</span>
+                                </a>
+                            </li>
+
+                            {{-- Manage Website --}}
+                            <li>
+                                <a href="{{ route('website.index') }}" class="ai-icon">
+                                    <i class="fa fa-globe"></i>
+                                    <span class="nav-text">Manage Website</span>
+                                </a>
+                            </li>
+                        @endif
 
 
-                        <li><a href="{{ route('dentist.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-stethoscope"></i>
-                                <span class="nav-text">Dentist</span>
-                            </a>
-                        </li>
-                        <li><a href="{{ route('patients.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-users"></i>
-                                <span class="nav-text">Patients</span>
-                            </a>
-                        </li>
-                        <!-- <li><a href="widget-basic.html" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-files-o"></i>
-                                <span class="nav-text">Records</span>
-                            </a>
-                        </li> -->
-                        <li><a href="{{ route('reports.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-file-o"></i>
-                                <span class="nav-text">Reports</span>
-                            </a>
-                        </li>
-                        <li><a href="{{ route('service.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-list-alt"></i>
-                                <span class="nav-text">Services</span>
-                            </a>
-                        </li>
+                        {{-- ================= ADMIN ONLY ================= --}}
+                        @if (Auth::user()->usertype == '1')
+                            <li>
+                                <a href="{{ route('faq.index') }}" class="ai-icon">
+                                    <i class="fa fa-question-circle-o"></i>
+                                    <span class="nav-text">FAQ</span>
+                                </a>
+                            </li>
 
-                        <div class="sidebar-small-cap">
-                            <h4>Others</h4>
-                        </div>
+                            <li>
+                                <a href="{{ route('reports.index') }}" class="ai-icon">
+                                    <i class="fa fa-file-o"></i>
+                                    <span class="nav-text">Reports</span>
+                                </a>
+                            </li>
 
-                        <li><a href="{{ route('activity.show') }}" class="ai-icon" aria-expanded="false">
-                                <i class="flaticon-381-clock"></i>
-                                <span class="nav-text">Activity Log</span>
-                            </a>
-                        </li>
-                        <!--<li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-comments-o"></i>
-                                <span class="nav-text">Customer Support</span>
-                            </a>
-                        </li>
-                    -->
-                        <li><a href="{{ route('faq.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-question-circle-o"></i>
-                                <span class="nav-text">FAQ</span>
-                            </a>
-                        </li>
-                        <li><a href="{{ route('user.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-user-plus"></i>
-                                <span class="nav-text">Manage Users</span>
-                            </a>
-                        </li>
-                        <li><a href="{{ route('website.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-globe"></i>
-                                <span class="nav-text">Manage Website</span>
-                            </a>
-                        </li>
-                    @endif
-                    @if (Auth::user()->usertype == '3')
-                        <li><a href="{{ route('appointment.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-calendar"></i>
-                                <span class="nav-text">Appointments</span>
-                            </a>
-                        </li>
-                        <li><a href="{{ route('results.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-file"></i>
-                                <span class="nav-text">Records</span>
-                            </a>
-                        </li>
-                        <!-- <li><a href="{{ route('customer-support') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-comments-o"></i>
-                                <span class="nav-text">Customer Support</span>
-                            </a>
-                        </li>
-                    -->
-                        <li><a href="{{ route('faq.patient') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-question-circle-o"></i>
-                                <span class="nav-text">FAQ</span>
-                            </a>
-                        </li>
-                    @endif
+                            <li>
+                                <a href="{{ route('activity.show') }}" class="ai-icon">
+                                    <i class="flaticon-381-clock"></i>
+                                    <span class="nav-text">Activity Log</span>
+                                </a>
+                            </li>
 
-                    @if (Auth::user()->usertype == '2')
-                        <li><a href="{{ route('dentist_app.index') }}" class="ai-icon" aria-expanded="false">
-                                <i class="fa fa-users"></i>
-                                <span class="nav-text">Patients</span>
-                            </a>
-                        </li>
-                        </li>
-                    @endif
+                            <li>
+                                <a href="{{ route('user.index') }}" class="ai-icon">
+                                    <i class="fa fa-user-plus"></i>
+                                    <span class="nav-text">Manage Users</span>
+                                </a>
+                            </li>
+                        @endif
+
+
+                        {{-- ================= PATIENT (usertype 3) ================= --}}
+                        @if (Auth::user()->usertype == '3')
+                            <li>
+                                <a href="{{ route('appointment.index') }}" class="ai-icon">
+                                    <i class="fa fa-calendar"></i>
+                                    <span class="nav-text">Appointments</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('faq.patient') }}" class="ai-icon">
+                                    <i class="fa fa-question-circle-o"></i>
+                                    <span class="nav-text">FAQ</span>
+                                </a>
+                            </li>
+                        @endif
+
+
+                        {{-- ================= DENTIST (usertype 2) ================= --}}
+                        @if (Auth::user()->usertype == '2')
+                            <li>
+                                <a href="{{ route('dentist_app.index') }}" class="ai-icon">
+                                    <i class="fa fa-users"></i>
+                                    <span class="nav-text">Patients</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (in_array(Auth::user()->usertype, ['2', '3']))
+                            <li>
+                                <a href="{{ route('results.index') }}" class="ai-icon">
+                                    <i class="fa fa-file"></i>
+                                    <span class="nav-text">Records</span>
+                                </a>
+                            </li>
+                        @endif
+
+
+                    @endauth
                 </ul>
+
             </div>
         </div>
         <!--**********************************
